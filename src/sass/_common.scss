@@ -1,5 +1,30 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 
+// Fonts
+$main-font-family: 'Roboto', sans-serif;
+
+// Size
+$mobile: 480px;
+$tablet: 768px;
+$desktop: 1280px;
+
+// Colors
+$first-text-color: #000000;
+$secondary-text-color: #ffffff;
+$trird-text-color: #8c8c8c;
+$fourth-text-color: #545454;
+$sixth-text-color: #ff6b08;
+$main-bgcolor: #ffffff;
+$secondary-bg-color: #ff6b08;
+$first-border-color: #000000;
+$secondary-border-color: #ffffff;
+$line-color: #ff001b;
+
+// Animation
+$transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+$animation: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
 body {
   font-family: $main-font-family;
   color: #000000;
@@ -45,28 +70,3 @@ li {
 a {
   text-decoration: none;
 }
-
-// Fonts
-$main-font-family: 'Roboto', sans-serif;
-
-// Size
-$mobile: 480px;
-$tablet: 768px;
-$desktop: 1280px;
-
-// Colors
-$first-text-color: #000000;
-$secondary-text-color: #ffffff;
-$trird-text-color: #8c8c8c;
-$fourth-text-color: #545454;
-$sixth-text-color: #ff6b08;
-$main-bgcolor: #ffffff;
-$secondary-bg-color: #ff6b08;
-$first-border-color: #000000;
-$secondary-border-color: #ffffff;
-$line-color: #ff001b;
-
-// Animation
-$transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-
-$animation: 250ms cubic-bezier(0.4, 0, 0.2, 1);
