@@ -1,0 +1,48 @@
+.header__logo {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  overflow: hidden;
+  margin-right: 10px;
+
+  @include tablet {
+    top: 41px;
+    left: 30px;
+  }
+
+  &:hover,
+  &:focus {
+    stroke: $sixth-text-color;
+  }
+
+  @media screen and (min-width: 852px) {
+    left: 32px;
+  }
+
+  @media screen and (min-width: 872px) {
+    left: 44px;
+  }
+
+  @media screen and (min-width: 969px) {
+    left: 91px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    left: 17px;
+  }
+
+  @media screen and (min-width: 1363px) {
+    left: 30px;
+  }
+
+  @media screen and (min-width: 1420px) {
+    left: 59px;
+  }
+  @media screen and (min-width: 1600px) {
+    left: 140px;
+  }
+
+  @media screen and (min-width: 1800px) {
+    left: 160px;
+  }
+}

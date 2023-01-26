@@ -1,0 +1,63 @@
+<header class="header" id="home">
+  <div class="header__container container">
+    <div class="header__wrapper">
+      <a class="logo" href="./index.html">
+        <div class="header__logo">
+          <svg class="header__logo--icon" width="24px" height="24px">
+            <use href="./images/icons.svg#icon-logo"></use>
+          </svg>
+        </div>
+        <span class="logo__text">Filmoteka</span>
+      </a>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__item active">
+            <a class="nav__link" href="index.html"> home </a>
+          </li>
+          <li class="nav__item hidden-item" id="library">
+            <a class="nav__link" href="library.html"> my library </a>
+          </li>
+          <!-- <li>
+            <button type="button" class="open-auth">
+              <svg class="auth-icon" width="20" height="20">
+                <use href="/src/images/symbol-defs.svg#icon-closed"></use>
+              </svg>
+            </button>
+          </li> -->
+          <!-- <li>
+            <button type="button" class="exit hidden-item">
+              <svg class="auth-icon" width="20" height="20">
+                <use href="/src/images/symbol-defs.svg#icon-open"></use>
+              </svg>
+            </button>
+          </li> -->
+        </ul>
+      </nav>
+    </div>
+    <div class="input">
+      <form class="input__wraper form" id="search-form">
+        <input
+          class="header__input"
+          name="searchQuery"
+          type="text"
+          placeholder="Movie search"
+          autocomplete="off"
+        />
+        <button class="input__search-btn" type="submit">
+          <svg class="input__search-icon" width="12px" height="12px">
+            <use href="./images/icons.svg#icon-search"></use>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <p class="input__error" id="js-input-error"></p>
+    <!-- <label class="form-switch">
+      <input type="checkbox" id="theme-switch-toggle" />
+      <i></i>
+      <svg class="theme-switch__icon" aria-label="moon">
+        <use href="./images/symbol-defs.svg#moon"></use>
+      </svg>
+    </label> -->
+  </div>
+</header>
