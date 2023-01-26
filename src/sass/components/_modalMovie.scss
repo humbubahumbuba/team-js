@@ -6,8 +6,8 @@
   margin: 0 auto;
 
   background-color: $secondary-border-color;
-  transform: translateY(0px);
-  transition: translateY $animation, opacity $animation, visibility $animation;
+  transform: scale(1);
+  transition: transform $animation, opacity $animation, visibility $animation;
 
   @media screen and (min-width: $tablet) {
     position: absolute;
@@ -25,18 +25,34 @@
   }
 }
 
-.modal-movie.is-hidden {
+.is-hidden {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(100px);
+  transform: scale(0.7);
 }
 
 .modal-movie__close-btn {
   position: absolute;
   top: 8px;
   right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 30px;
   height: 30px;
-  background-color: black;
+
+  background-color: transparent;
+  transform: scale(1);
+  transition: transform $transition, color $transition;
+
+  &:hover,
+  :focus {
+    color: $active-btn-color;
+    transform: scale(1.4);
+  }
+}
+
+.no-scroll {
+  overflow: hidden;
 }
