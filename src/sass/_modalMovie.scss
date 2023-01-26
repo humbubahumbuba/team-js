@@ -1,0 +1,42 @@
+.modal-movie {
+  position: relative;
+  width: 280px;
+  height: 940px;
+
+  margin: 0 auto;
+
+  background-color: $secondary-border-color;
+  transform: translateY(0px);
+  transition: translateY $animation, opacity $animation, visibility $animation;
+
+  @media screen and (min-width: $tablet) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 704px;
+    height: 552px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: 806px;
+    height: 558px;
+  }
+}
+
+.modal-movie.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(100px);
+}
+
+.modal-movie__close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  background-color: black;
+}
