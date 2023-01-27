@@ -4,6 +4,7 @@
   height: 940px;
 
   margin: 0 auto;
+  padding: 48px 20px 0;
 
   background-color: $secondary-border-color;
   transform: scale(1);
@@ -17,11 +18,13 @@
 
     width: 704px;
     height: 552px;
+    padding: 40px 36px;
   }
 
   @media screen and (min-width: $desktop) {
     width: 806px;
     height: 558px;
+    padding: 40px 12px;
   }
 }
 
@@ -53,6 +56,156 @@
   }
 }
 
-.no-scroll {
-  overflow: hidden;
+.modal-movie__poster {
+  width: 240px;
+  height: 357px;
+  background-color: gray;
+
+  margin-bottom: 20px;
+
+  @media screen and (min-width: $tablet) {
+    width: 264px;
+    height: 373.55px;
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: 375px;
+    height: 478px;
+  }
+}
+
+.movie-card__title {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.15;
+
+  margin-bottom: 20px;
+
+  @media screen and (min-width: $desktop) {
+    font-size: 30px;
+    line-height: 1.16;
+  }
+}
+
+.info-table {
+  width: 240px;
+  margin-bottom: 20px;
+}
+
+.info-table__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-table__classification {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+
+  color: $trird-text-color;
+}
+
+.info-table__classification-data {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+
+  color: $first-text-color;
+}
+
+.rating--slash-color {
+  color: $trird-text-color;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 16px;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+
+  border-radius: 5px;
+}
+
+.rating--vote {
+  color: $secondary-text-color;
+  background-color: #ff6b01;
+}
+
+.rating--votes {
+  background-color: #f7f7f7;
+}
+
+.movie-card__about-title {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+
+  margin-bottom: 8px;
+}
+
+.movie-card__movie-description {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.67;
+
+  margin-bottom: 20px;
+
+  @media screen and (min-width: $tablet) {
+    width: 264px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: 391px;
+  }
+}
+
+.control-btns {
+  display: flex;
+  column-gap: 20px;
+}
+
+.control-btn {
+  width: 110px;
+  height: 44px;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+
+  border-radius: 5px;
+
+  @media screen and (min-width: $tablet) {
+    width: 125px;
+  }
+  @media screen and (min-width: $desktop) {
+    width: 136px;
+  }
+}
+
+.control-btn--to-watched {
+  background-color: $active-btn-color;
+  color: $secondary-text-color;
+}
+
+.control-btn--to-queue {
+  border: 1px solid $first-border-color;
+  background-color: transparent;
+}
+
+@media screen and (min-width: $tablet) {
+  .movie-box {
+    display: flex;
+    column-gap: 68px;
+  }
+}
+@media screen and (min-width: $desktop) {
+  .movie-box {
+    column-gap: 16px;
+  }
 }

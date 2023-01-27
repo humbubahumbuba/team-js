@@ -1,10 +1,66 @@
-<div class="modal-movie is-hidden js-modal-movie">
-    <button class="modal-movie__close-btn js-close-btn" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
-            class="modal-movie__icon-close" viewBox="0 0 16 16">
-            <path
-                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-        </svg>
-    </button>
+<div class="backdrop is-hidden">
+    <div class="modal-movie is-hidden js-modal-movie">
+        <button class="modal-movie__close-btn js-close-btn" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                class="modal-movie__icon-close" viewBox="0 0 16 16">
+                <path
+                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+            </svg>
+        </button>
+        <div class="movie-box"><!-- there is will be render -->
+            <!-- Start render markup -->
+            <img class="modal-movie__poster" src="#" alt="">
+            <div class="movie-card">
+                <h1 class="movie-card__title">A FISTFUL OF LEAD</h1>
+                <table class="info-table">
+                    <tbody>
+                        <tr class="info-table__row">
+                            <td class="info-table__classification">Vote / Votes</td>
+                            <td class="info-table__classification-data">
+                                <span class="rating rating--vote">7.3</span>
+                                <span class="rating--slash-color">/</span>
+                                <span class="rating rating--votes">1260</span>
+                            </td>
+                        </tr>
+                        <tr class="info-table__row">
+                            <td class="info-table__classification">Popularity</td>
+                            <td class="info-table__classification-data">100.2</td>
+                        </tr>
+                        <tr class="info-table__row">
+                            <td class="info-table__classification">Original Title</td>
+                            <td class="info-table__classification-data">A FISTFUL OF LEAD</td>
+                        </tr>
+                        <tr class="info-table__row">
+                            <td class="info-table__classification">Genre</td>
+                            <td class="info-table__classification-data">Western</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 class="movie-card__about-title">About</h2>
+                <p class="movie-card__movie-description">Four of the Wests most infamous outlaws assemble to steal a
+                    huge
+                    stash
+                    of gold from the most corrupt
+                    settlement of the
+                    gold rush towns. But not all goes to plan one is killed and the other three escapes with bags of
+                    gold
+                    hide
+                    out in the
+                    abandoned gold mine where they happen across another gang of three who themselves were planning to
+                    hit
+                    the
+                    very same
+                    bank! As tensions rise, things go from bad to worse as they realise the bags of gold are filled with
+                    lead...
+                    theyve
+                    been double crossed but by who and how?</p>
+                <!-- End render markup -->
+                <ul class="control-btns">
+                    <li><button class="control-btn control-btn--to-watched" type="button">add to Watched</button></li>
+                    <li><button class="control-btn control-btn--to-queue" type="button">add to queue</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 <button class="js-click" type="button">Click</button>

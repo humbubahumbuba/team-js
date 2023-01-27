@@ -22,11 +22,13 @@ function closeModalOnEscapePress(event) {
 };
 
 function showModal() {
+    modalMovie.parentElement.classList.remove('is-hidden');
     modalMovie.classList.remove('is-hidden');
     document.body.classList.add('.no-scroll');
 };
 
 function hideModal() {
+    modalMovie.parentElement.classList.add('is-hidden');
     modalMovie.classList.add('is-hidden');
     document.body.classList.remove('.no-scroll');
     document.removeEventListener('keydown', closeModalOnEscapePress);
