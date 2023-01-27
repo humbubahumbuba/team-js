@@ -1,8 +1,4 @@
 // *** CURRENT PAGE CONTENT STORE & RENDER *** //
-// uses const CRT_USER = 'current-user';
-// current user with id: 0 - named temp
-// import also has queue/watched, when logged in - import's q/w cleared, data moved to users q/w
-// also need to check if q/w has movies from temp
 
 // import movie content fetch fn
 import { getTrendMovies, getGenresMovies } from "./api-fetch";
@@ -12,8 +8,9 @@ import { getStorageData, setStorageData } from "./ls-data";
 import { lskeys } from "./ls-data";
 const { HOME_CONTENT, GENRES, CRT_CONTENT, CRT_USER } = lskeys;
 
+
 // load genres once
-// const genres = await getGenresMovies();
+loadPageContent(GENRES);
 
 
 // load home page content once
