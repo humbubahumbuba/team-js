@@ -43,7 +43,6 @@
   }
 
   @include desktop {
-    // max-width: 1600px;
     height: 216px;
 
     background-image: linear-gradient(
@@ -66,22 +65,9 @@
 
 .header__wrapper {
   display: flex;
-  position: relative;
-  align-items: center;
   justify-content: space-between;
-}
-
-.logo {
-  margin-top: 40px;
-  margin-left: 20px;
-  display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.logo__icon {
-  display: inline-block;
-  margin-right: 10px;
+  padding-top: 40px;
 }
 
 .logo__text {
@@ -101,7 +87,6 @@
 }
 .nav {
   display: flex;
-  margin-top: 40px;
 }
 .nav__list {
   display: flex;
@@ -135,23 +120,6 @@
 }
 
 .nav__link {
-  // opacity: 1;
-  // font-weight: 500;
-  // text-transform: uppercase;
-  // color: $secondary-text-color;
-
-  // font-weight: 500;
-  // line-height: 1.17;
-
-  // display: flex;
-  // align-items: center;
-  // text-align: center;
-  // text-transform: uppercase;
-  // &:hover,
-  // &:focus {
-  //   color: $trird-text-color;
-  //   transition: $transition;
-  // }
   text-transform: uppercase;
   @include font(12, 500, 1.16);
   color: $secondary-text-color;
@@ -160,6 +128,12 @@
     color: $trird-text-color;
     transition: $transition;
   }
+}
+
+.nav__auth-btn {
+  cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
 .form {
@@ -202,6 +176,7 @@
   position: relative;
 }
 .input__search-btn {
+  cursor: pointer;
   position: absolute;
   content: '';
 
@@ -209,7 +184,6 @@
   height: 18px;
 
   right: 0;
-  // bottom: 6px;
   background: transparent;
   border: none;
   margin: 0;
@@ -222,9 +196,7 @@
     stroke: $sixth-text-color;
   }
 }
-//   .input__search-icon {
-//     margin-left: -13px;
-//   }
+
 .input__error {
   font-weight: 400;
   font-size: 14px;
