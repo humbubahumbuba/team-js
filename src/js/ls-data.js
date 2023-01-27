@@ -24,8 +24,7 @@ export function setStorageData(key, data) {
     try {
         const serializedData = JSON.stringify(data);
         localStorage.setItem(key, serializedData);
-    } catch(error) {
+    } catch (error) {
         console.error("Set state error: ", error.message);
     }
-    
 }
