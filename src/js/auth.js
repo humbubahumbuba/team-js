@@ -1,6 +1,7 @@
 // *** AUTH MODULE (div into lesser functional chunks) *** //
 
-import { getStorageData, setStorageData } from "./ls-data";
+import { getStorageData, setStorageData, lskeys } from "./ls-data";
+const { STORAGE_USERS, CRT_USER } = lskeys;
 
 const refs = {
 	signUpForm: document.querySelector('.form-signup'),
@@ -17,64 +18,78 @@ const refs = {
 
 // *** Auth modal windows *** //
 
-// add listeners for modals open/close
-refs.modalOpenBtns.forEach(function (openBtn) {
-	openBtn.addEventListener('click', openModal);
-});
 
-refs.modalCloseBtns.forEach(function (closeBtn) {
-	closeBtn.addEventListener('click', closeModal);
-});
+// !!! remove fn wrapper when lib page contains auth modal windows !!!
+// check if page is home page 
+const HOME_URL = 'http://localhost:1234/index.html';
+if (window.location.href === HOME_URL) {
+	document.addEventListener('DOMContentLoaded', handleAuth);
+}
+
+// function wrapping to avoid errors on pages with no auth modals
+function handleAuth() {
+	// add listeners for modals open/close
+	refs.modalOpenBtns.forEach(function (openBtn) {
+		openBtn.addEventListener('click', openModal);
+	});
+
+	refs.modalCloseBtns.forEach(function (closeBtn) {
+		closeBtn.addEventListener('click', closeModal);
+	});
 
 
-// add functions for handling opening/closing
-function openModal(e) {
-    // prevent default click handling if button is a link
-    e.preventDefault();
+	// add functions for handling opening/closing
+	function openModal(e) {
+		// prevent default click handling if button is a link
+		e.preventDefault();
 
-	const modalId = this.getAttribute('data-modal-open');
-	const modalElem = document.querySelector('.modal[data-modal="' + modalId + '"]');
+		const modalId = this.getAttribute('data-modal-open');
+		const modalElem = document.querySelector('.modal[data-modal="' + modalId + '"]');
 
-	// hotfix for swapping auth forms
-	if (e.target.dataset.modalOpen === "signup" ||
-	    e.target.dataset.modalOpen === "login") {
-		closeModal.call(this);
+		// hotfix for swapping auth forms
+		if (e.target.dataset.modalOpen === "signup" ||
+			e.target.dataset.modalOpen === "login") {
+			closeModal.call(this);
+		}
+
+		modalElem.classList.add('active');
+		refs.overlay.classList.add('active');
 	}
 
-	modalElem.classList.add('active');
-	refs.overlay.classList.add('active');
-}
+	function closeModal(e) {
+		const parentModal = this.closest('.modal');
 
-function closeModal(e) {
-	const parentModal = this.closest('.modal');
+		parentModal.classList.remove('active');
+		refs.overlay.classList.remove('active');
+	}
 
-	parentModal.classList.remove('active');
-	refs.overlay.classList.remove('active');
-}
+	// close on hitting Escape button
+	document.body.addEventListener('keyup', (e) => {
+		if (e.key === 'Escape') {
+			document.querySelector('.modal.active').classList.remove('active');
+			document.querySelector('.overlay').classList.remove('active');
+		}
+	});
 
-// close on hitting Escape button
-document.body.addEventListener('keyup', (e) => {
-	if (e.key === 'Escape') {
+	/* // close on backdrop click
+	refs.overlay.addEventListener('click', function () {
 		document.querySelector('.modal.active').classList.remove('active');
-		document.querySelector('.overlay').classList.remove('active');
-	}
-});
+		this.classList.remove('active');
+	});
+	*/
 
-/* // close on backdrop click
-refs.overlay.addEventListener('click', function () {
-	document.querySelector('.modal.active').classList.remove('active');
-	this.classList.remove('active');
-});
-*/
+
+	// listeners moved from auth scripts 
+	refs.signInBtn.addEventListener('click', onLoginClick);
+	refs.signUpBtn.addEventListener('click', onSignUpClick);
+
+};
+
+//endof handleAuth
+
 
 // *** //
 
-
-
-
-// CONSTANTS FOR AUTH & CURRENT PAGE
-// add as export of LS
-const STORAGE_USERS = 'users-data';
 
 
 
@@ -106,10 +121,6 @@ function onSignUpClick(e) {
 
 
 // *** Auth scripts *** //
-
-refs.signInBtn.addEventListener('click', onLoginClick);
-refs.signUpBtn.addEventListener('click', onSignUpClick);
-
 
 // create user
 // ADD VALIDATION!!!
