@@ -8,13 +8,24 @@ export const lskeys = {
     GENRES: 'movie-genres',
 }
 
+
 // get data by key
 export function getStorageData(key) {
-	return JSON.parse(localStorage.getItem(key));
+    try {
+        const serializedData = localStorage.getItem(key);
+        return serializedData === null ? undefined : JSON.parse(serializedData);
+    } catch (error) {
+        console.error("Get state error: ", error.message);
+    }
 }
 
 // set data 
 export function setStorageData(key, data) {
-    const dataJSON = JSON.stringify(data);
-    localStorage.setItem(key, dataJSON);
+    try {
+        const serializedData = JSON.stringify(data);
+        localStorage.setItem(key, serializedData);
+    } catch(error) {
+        console.error("Set state error: ", error.message);
+    }
+    
 }
