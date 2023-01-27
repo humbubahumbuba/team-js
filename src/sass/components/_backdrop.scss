@@ -8,7 +8,8 @@
 
   background-color: rgba(0, 0, 0, 0.2);
 
-  transition: opacity $transition;
+  transform: translateY(0px);
+  transition: transform $animation, opacity $animation, visibility $animation;
 
   overflow-y: scroll;
 }
@@ -17,4 +18,5 @@
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
+  transform: translateY(-100px);
 }

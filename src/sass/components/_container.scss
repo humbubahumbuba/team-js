@@ -9,13 +9,11 @@
   }
 
   @include tablet {
-    // width: $tablet;
     padding-left: 32px;
     padding-right: 32px;
   }
 
   @include desktop {
-    // width: $desktop;
     padding-left: 16px;
     padding-right: 16px;
   }

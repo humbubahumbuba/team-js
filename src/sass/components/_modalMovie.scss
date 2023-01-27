@@ -1,13 +1,13 @@
 .modal-movie {
   position: relative;
   width: 280px;
-  height: 940px;
 
   margin: 0 auto;
-  padding: 48px 20px 0;
+  padding: 40px 20px;
+  padding-top: 48px;
 
   background-color: $secondary-border-color;
-  transform: scale(1);
+  transform: translateY(0px);
   transition: transform $animation, opacity $animation, visibility $animation;
 
   @media screen and (min-width: $tablet) {
@@ -26,13 +26,6 @@
     height: 558px;
     padding: 40px 12px;
   }
-}
-
-.is-hidden {
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.7);
 }
 
 .modal-movie__close-btn {
@@ -59,9 +52,10 @@
 .modal-movie__poster {
   width: 240px;
   height: 357px;
-  background-color: gray;
-
   margin-bottom: 20px;
+
+  background-color: gray;
+  border-radius: 5px;
 
   @media screen and (min-width: $tablet) {
     width: 264px;
@@ -91,11 +85,6 @@
 .info-table {
   width: 240px;
   margin-bottom: 20px;
-}
-
-.info-table__row {
-  display: flex;
-  justify-content: space-between;
 }
 
 .info-table__classification {
