@@ -1,0 +1,26 @@
+.visually-hidden {
+    visibility: hidden;
+}
+
+.movieList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.movieCard__img {
+    width: 280px;
+    height: 398px;
+    object-fit: cover;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    @include tablet {
+        width: 336px;
+        height: 455px;
+    }
+
+    @include desktop {
+        width: 395px;
+        height: 574px;
+    }
+}
