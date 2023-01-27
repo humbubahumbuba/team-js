@@ -2,19 +2,30 @@
 
 // import movie content fetch fn
 import { getTrendMovies, getGenresMovies } from "./api-fetch";
-// import localStorage getter & setter
+// import localStorage getter, setter and keys
 import { getStorageData, setStorageData } from "./ls-data";
-
 import { lskeys } from "./ls-data";
 const { HOME_CONTENT, GENRES, CRT_CONTENT, CRT_USER } = lskeys;
 
 
-// load genres once
-loadPageContent(GENRES);
+// get saved values of genres and trendy movies
+const genres = getStorageData(GENRES);
+const trendy = getStorageData(HOME_CONTENT);
+
+// load genres once if no value
+if (!genres) { 
+    loadPageContent(GENRES); 
+}
+
+// load trendy movies for homepage once
+if (!trendy) {
+    loadPageContent(HOME_CONTENT); 
+}
 
 
-// load home page content once
-export async function loadPageContent(lsKey=HOME_CONTENT) {
+
+// api data loader
+export async function loadPageContent(lsKey) {
     if (lsKey === HOME_CONTENT) {
         const response = await getTrendMovies();
         setStorageData(lsKey, response);
@@ -32,7 +43,6 @@ if (!pageContent) {
     loadPageContent();
 }
 */
-
 
 
 /*
