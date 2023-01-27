@@ -17,10 +17,8 @@ export async function getTrendMovies() {
 export async function getGenresMovies() {
     try {
         const response = await axios.get(`${BASE_URL}genre/movie/list?api_key=${API_KEY}&language=en-US`)
-        // console.log(response)
-        return response.data;
-
+        // console.log(response.data.genres)
+        return response.data.genres;
     }
     catch (err) { console.log(err) }
 }
-
