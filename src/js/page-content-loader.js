@@ -2,6 +2,7 @@
 
 // import movie content fetch fn
 import { getTrendMovies, getGenresMovies } from "./api-fetch";
+import { onSpinnerDisabled, onSpinnerEnabled } from "./loader-spinner";
 // import localStorage getter, setter and keys
 import { getStorageData, setStorageData } from "./ls-data";
 import { lskeys } from "./ls-data";
@@ -84,11 +85,13 @@ export async function loadPageContent(lsKey, page=1) {
 // get trend movies for homepage render
 export async function getPromisedData(key) {
   try {
+        onSpinnerEnabled()
         await new Promise(function (resolve) {
             let data = getStorageData(key);
 
             setTimeout(function () {
                 resolve();
+                onSpinnerDisabled();
             }, 1000);
         });
         data = getStorageData(key);
