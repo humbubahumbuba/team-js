@@ -38,28 +38,6 @@ if (!currentPageData) {
 
 
 
-// *** User data *** //
-
-// check if any user
-const currentUser = getStorageData(CRT_USER);
-
-// if no user logged in - use temporary queue and watched
-if (!currentUser) {
-	setStorageData(TMP_QUEUE, []);
-	setStorageData(TMP_WATCHED, []);
-}
-
-
-// functions for adding to queue/watched
-
-
-// function for importing temporary queue/watched to logged in user
-
-
-
-// *** //
-
-
 // *** API data loader *** //
 
 export async function loadPageContent(lsKey) {
@@ -84,3 +62,53 @@ export async function loadPageContent(lsKey) {
 }
 
 // *** end of loader *** //
+
+
+
+
+// *** EXPORT FUNCTIONS FOR LOCALSTORAGE KEYS *** //
+
+// get trend movies for homepage render
+export async function getTrendMoviesFromLocalStorage() {
+    let movies = await getStorageData(HOME_CONTENT);
+
+    if (movies) {
+        // console.log("Log inside export fn: ", movies);
+        return movies;
+    }
+}
+
+
+// 
+// export async function getCurrentPageMovies() {
+
+// }
+
+
+
+// *** //
+
+
+
+
+// *** User data *** //
+
+// check if any user
+const currentUser = getStorageData(CRT_USER);
+
+// if no user logged in - use temporary queue and watched
+if (!currentUser) {
+    setStorageData(TMP_QUEUE, []);
+    setStorageData(TMP_WATCHED, []);
+}
+
+
+// functions for adding to queue/watched
+
+
+
+// function for importing temporary queue/watched to logged in user
+
+
+
+// *** //
