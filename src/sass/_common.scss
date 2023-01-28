@@ -19,6 +19,7 @@ $secondary-bg-color: #ff6b08;
 $first-border-color: #000000;
 $secondary-border-color: #ffffff;
 $line-color: #ff001b;
+$active-btn-color: #ff6b01;
 
 // Animation
 $transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -33,6 +34,7 @@ body {
 
 button {
   border: none;
+  cursor: pointer;
 }
 
 .no-scroll {
