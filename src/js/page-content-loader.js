@@ -2,50 +2,69 @@
 
 // import movie content fetch fn
 import { getTrendMovies, getGenresMovies } from "./api-fetch";
-// import localStorage getter & setter
+// import localStorage getter, setter and keys
 import { getStorageData, setStorageData } from "./ls-data";
-
 import { lskeys } from "./ls-data";
 const { HOME_CONTENT, GENRES, CRT_CONTENT, CRT_USER } = lskeys;
 
 
-// load genres once
-loadPageContent(GENRES);
+// !!! add initLoad() wrapper function for 1st page load
+// initload start
+
+// get saved values of genres
+// load genres once if no value
+const genres = getStorageData(GENRES);
+
+if (!genres) { 
+    loadPageContent(GENRES); 
+}
 
 
-// load home page content once
-export async function loadPageContent(lsKey=HOME_CONTENT) {
-    if (lsKey === HOME_CONTENT) {
-        const response = await getTrendMovies();
-        setStorageData(lsKey, response);
-        return response;
-    }
+// load current once
+const current = getStorageData(CRT_CONTENT);
+
+if (!current) {
+    loadPageContent(CRT_CONTENT);
+}
+
+
+// load trendy after current
+// load trendy movies for homepage once
+const trendy = getStorageData(HOME_CONTENT);
+
+if (!trendy) {
+    loadPageContent(HOME_CONTENT);
+}
+// initload end
+
+
+// api data loader
+export async function loadPageContent(lsKey) {
     if (lsKey === GENRES) {
         const response = await getGenresMovies();
         setStorageData(lsKey, response);
     }
+
+    if (lsKey === CRT_CONTENT) {
+        /* fix here */ 
+
+        // check if current page is home page
+        const crtPage = document.querySelector('head title').textContent;
+
+        if (crtPage === "Filmoteka") {
+            const response = await getTrendMovies();
+
+            setStorageData(lsKey, response);
+            setStorageData(HOME_CONTENT, response);
+        } else {
+            console.log("else");
+        }
+    }
 }
 
 
-/* load content on page load
-if (!pageContent) {
-    loadPageContent();
-}
-*/
-
-
-
-/*
-// load current page content once
-// do not load if curent page = home page
-if (page === homePage) {
-	loadPageContent(pageContent);
-} else {
-	setStorageData(CRT_CONTENT, apiRequest(query));
-	pageContent = getStorageData(CRT_CONTENT);
-	loadPageContent(pageContent);
-}
-
+/* 
+//load content on page load
 
 // check if any user is currently logged in
 const currentUser = getStorageData(CRT_USER);
