@@ -27,13 +27,79 @@ if (!trendy) {
 
 // load current once
 let currentPageData = getStorageData(CRT_CONTENT);
-const currentPage = document.querySelector('head title').textContent;
+let currentPageURL = window.location.href;
+// home page urls and analogs
+// change 3rd option when fixed empty string search
+const homePageURL = ['http://localhost:1234/', 
+                     'http://localhost:1234/index.html',
+                     'http://localhost:1234/index.html?searchQuery='];
 
 if (!currentPageData) {
-    loadPageContent(CRT_CONTENT);
+    if (homePageURL.includes(currentPageURL)) {
+        loadPageContent(CRT_CONTENT, HOME_CONTENT);
+    }
 }
 
 // *** initload end *** //
+
+
+
+
+// *** API data loader *** //
+
+export async function loadPageContent(lsKey, page=1) {
+
+    if (lsKey === GENRES) {
+        const response = await getGenresMovies();
+        setStorageData(lsKey, response);
+    }
+
+    if (lsKey === HOME_CONTENT) {
+        const response = await getTrendMovies();
+        setStorageData(lsKey, response.results);
+    }
+
+    if (lsKey === CRT_CONTENT) {
+        // if current page is home page
+        if (page === HOME_CONTENT) {
+            const response = await getTrendMovies();
+            setStorageData(lsKey, response.results);
+            return;
+        }
+
+        // add API query response handling
+        const response = await getQueryMovies(query, page);
+        setStorageData(lsKey, response.results);        
+    }
+
+}
+
+// *** end of loader *** //
+
+
+
+
+// *** EXPORT FUNCTIONS FOR LOCALSTORAGE KEYS *** //
+
+// get trend movies for homepage render
+export async function fetchStorageData(key) {
+    let data = await getStorageData(key);
+
+    if (data) {
+        // console.log("Log inside export fn: ", data);
+        return data;
+    }
+}
+
+
+// 
+// export async function getCurrentPageMovies() {
+
+// }
+
+
+
+// *** //
 
 
 
@@ -45,12 +111,13 @@ const currentUser = getStorageData(CRT_USER);
 
 // if no user logged in - use temporary queue and watched
 if (!currentUser) {
-	setStorageData(TMP_QUEUE, []);
-	setStorageData(TMP_WATCHED, []);
+    setStorageData(TMP_QUEUE, []);
+    setStorageData(TMP_WATCHED, []);
 }
 
 
 // functions for adding to queue/watched
+
 
 
 // function for importing temporary queue/watched to logged in user
@@ -58,29 +125,3 @@ if (!currentUser) {
 
 
 // *** //
-
-
-// *** API data loader *** //
-
-export async function loadPageContent(lsKey) {
-
-    if (lsKey === GENRES) {
-        const response = await getGenresMovies();
-        setStorageData(lsKey, response);
-    }
-
-    if (lsKey === HOME_CONTENT) {
-        const response = await getTrendMovies();
-        setStorageData(lsKey, response.results);
-
-        if (currentPage === "Filmoteka") {
-            setStorageData(CRT_CONTENT, response.results);
-        }
-    }
-
-    if (lsKey === CRT_CONTENT) {
-        console.log("Loading current content");
-    }
-}
-
-// *** end of loader *** //
