@@ -65,22 +65,6 @@
   }
 }
 
-.footer__credit {
-  align-items: center;
-  @include font(10px, 400, 16px);
-  margin-top: 10px;
-
-  @media screen and(min-width: 1280px) {
-    margin-top: 0;
-    margin-left: 5px;
-    @include font(16px, 400, 1.18);
-
-    &-span {
-      font-style: italic;
-    }
-  }
-}
-
 .footer__link {
   color: #545454;
   cursor: pointer;
