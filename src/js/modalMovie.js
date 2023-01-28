@@ -1,5 +1,5 @@
-//тимчасовий костиль
 import { lskeys, getStorageData } from "./ls-data";
+import { getTrendMovies } from "./api-fetch";
 
 const backdgop = document.querySelector('.js-backdrop');
 const modalMovie = document.querySelector('.js-modal-movie');
@@ -53,19 +53,13 @@ function onCloseModalBtnClick() {
 };
 
 function makeMovieMarkup(data) {
-    const { adult,
-        backdrop_path,
+    const { 
         genre_ids,
-        id,
-        media_type,
-        original_language,
         original_title,
         overview,
         popularity,
         poster_path,
-        release_date,
         title,
-        video,
         vote_average,
         vote_count } = data;
         const imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
@@ -108,9 +102,25 @@ function makeMovieMarkup(data) {
 };
 
 function renderMovieById(id) {
-    pageMovies.map(movie => {
-        if (movie.id === Number(id)) {
-            makeMovieMarkup(movie);
-        }
-    });
+    try {
+        if (pageMovies) {
+            pageMovies.map(movie => {
+                if (movie.id === Number(id)) {
+                    makeMovieMarkup(movie);
+                }
+            });
+        };
+
+        if (!pageMovies) {
+            getTrendMovies().then(response => {
+                response.results.map(movie => {
+                    if (movie.id === Number(id)) {
+                        makeMovieMarkup(movie);
+                    }
+                });
+            });
+        };
+    } catch (error) {
+        console.error(error.message);
+    };
 };
