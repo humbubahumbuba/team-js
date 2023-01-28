@@ -6,19 +6,8 @@ export const lskeys = {
     HOME_CONTENT: 'home-page-content',
     CRT_CONTENT: 'current-page-content',
     GENRES: 'movie-genres',
-};
+}
 
-
-// initialize localStorage keys
-(function initLoad() {
-    if(!localStorage.keys) {
-        localStorage.clear();
-
-        // create keys and assign values
-        Object.values(lskeys).map(key => localStorage.setItem(key, null));
-    }
-})();
-    
 
 // get data by key
 export function getStorageData(key) {
