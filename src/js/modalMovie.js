@@ -1,41 +1,25 @@
 //тимчасовий костиль
-import axios from 'axios';
-
-const BASE_URL = 'https://api.themoviedb.org/3/';
-const API_KEY = 'e8d94f3e976148bda0a5c640d4df112b';
-
-export async function getTrendMovies() {
-    try {
-        const response = await axios.get(`${BASE_URL}trending/all/day?api_key=${API_KEY}`)
-        // console.log(response.data)
-        return response.data;
-
-    } catch (err) {
-        console.log(err);
-    }
-}
-//тимчасовий костиль
+import { lskeys, getStorageData } from "./ls-data";
 
 const backdgop = document.querySelector('.js-backdrop');
 const modalMovie = document.querySelector('.js-modal-movie');
 const movieBox = document.querySelector('.js-movie-box');
 const closeModalBtn = document.querySelector('.js-close-btn');
 const movieList = document.querySelector('.movieList');
+const pageMovies = getStorageData(lskeys.CRT_CONTENT);
 
 closeModalBtn.addEventListener('click', onCloseModalBtnClick);
 movieList.addEventListener('click', onMovieClick);
 backdgop.addEventListener('click', onBackdropClick);
 
 function onMovieClick(event) {
-    const movieCard = movieList.firstElementChild;
-    const isMovieCard = event.target.classList.contains('movieCard__img') || event.target.classList.contains('movieCard__text');
+    const movieCard = event.target;
+    const isMovieCard = movieCard.classList.contains('movieCard__img') || movieCard.classList.contains('movieCard__title') || movieCard.classList.contains('movieCard__info');
     if (isMovieCard) {
-        const movieId = movieCard.getAttribute('data');
+        const selectedMovieId = movieCard.parentElement.parentElement.getAttribute('data');
         showModal();
         document.addEventListener('keydown', closeModalOnEscapePress);
-        getTrendMovies().then(response => {
-            renderSelectedMovieAtModal(response.results[2])
-        })//тимчасовий костиль
+        renderMovieById(selectedMovieId);
     };
 };
 
@@ -68,7 +52,7 @@ function onCloseModalBtnClick() {
     hideModal();
 };
 
-function renderSelectedMovieAtModal(date) {
+function makeMovieMarkup(data) {
     const { adult,
         backdrop_path,
         genre_ids,
@@ -83,7 +67,7 @@ function renderSelectedMovieAtModal(date) {
         title,
         video,
         vote_average,
-        vote_count } = date;
+        vote_count } = data;
         const imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
     const markup = `
         <img class="modal-movie__poster" src="${imageBaseUrl}/${poster_path}" alt="${title}" loading="lazy" >
@@ -121,4 +105,12 @@ function renderSelectedMovieAtModal(date) {
                 </ul>
             </div>`
     movieBox.innerHTML = markup;
+};
+
+function renderMovieById(id) {
+    pageMovies.map(movie => {
+        if (movie.id === Number(id)) {
+            makeMovieMarkup(movie);
+        }
+    });
 };
