@@ -1,0 +1,87 @@
+.footer {
+  color: #545454;
+  background-color: #f7f7f7;
+  font: inherit;
+}
+
+.footer-container {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+
+  padding-top: 29px;
+  padding-bottom: 29px;
+  color: #545454;
+
+  @include font(14px, 400, 16px);
+
+  @media screen and(min-width: 768px) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    @include font(16px, 400, 1.18);
+  }
+
+  @media screen and(min-width: 1280px) {
+    flex-direction: row;
+    align-items: baseline;
+    padding-top: 29px;
+    padding-bottom: 29px;
+  }
+}
+
+.wrapper {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+
+  @media screen and(min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
+.footer__rights {
+  margin-bottom: 10px;
+
+  @media screen and(min-width: 768px) {
+    margin-bottom: 0;
+    margin-right: 5px;
+  }
+}
+
+.footer__btn {
+  color: inherit;
+  background-color: transparent;
+  border-bottom: 1px solid #545454;
+  cursor: pointer;
+
+  @include font(14px, 400, 16px);
+
+  @media screen and(min-width: 768px) {
+    @include font(16px, 400, 1.18);
+    margin-right: 5px;
+  }
+}
+
+.footer__credit {
+  align-items: center;
+  @include font(10px, 400, 16px);
+  margin-top: 10px;
+
+  @media screen and(min-width: 1280px) {
+    margin-top: 0;
+    margin-left: 5px;
+    @include font(16px, 400, 1.18);
+
+    &-span {
+      font-style: italic;
+    }
+  }
+}
+
+.footer__link {
+  color: #545454;
+  cursor: pointer;
+}
