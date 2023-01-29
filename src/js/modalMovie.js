@@ -1,5 +1,6 @@
 import { lskeys, getStorageData } from "./ls-data";
 import { getTrendMovies } from "./api-fetch";
+import { genres } from '../data/genres.json';
 
 const backdgop = document.querySelector('.js-backdrop');
 const modalMovie = document.querySelector('.js-modal-movie');
@@ -53,7 +54,9 @@ function onCloseModalBtnClick() {
 };
 
 function makeMovieMarkup(data) {
-    const { 
+    const {
+        original_name,
+        name,
         genre_ids,
         original_title,
         overview,
@@ -62,17 +65,23 @@ function makeMovieMarkup(data) {
         title,
         vote_average,
         vote_count } = data;
-        const imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
+    const movieGenres = [];
+    genres.forEach(genre => {
+        if (genre_ids.includes(genre.id)) {
+            movieGenres.push(genre.name);
+        }
+    });
+    const imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
     const markup = `
-        <img class="modal-movie__poster" src="${imageBaseUrl}/${poster_path}" alt="${title}" loading="lazy" >
+        <img class="modal-movie__poster" src="${imageBaseUrl}/${poster_path}" alt="${title || name || original_name}" loading="lazy" >
             <div class="movie-card">
-                <h2 class="movie-card__title">${title}</h2>
+                <h2 class="movie-card__title">${(title || name || original_name).toUpperCase()}</h2>
                 <table class="info-table">
                     <tbody>
                         <tr>
                             <td class="info-table__classification">Vote / Votes</td>
                             <td class="info-table__classification-data">
-                                <span class="rating rating--vote">${vote_average}</span>
+                                <span class="rating rating--vote">${vote_average.toFixed(1)}</span>
                                 <span class="rating--slash-color">/</span>
                                 <span class="rating rating--votes">${vote_count}</span>
                             </td>
@@ -83,11 +92,11 @@ function makeMovieMarkup(data) {
                         </tr>
                         <tr>
                             <td class="info-table__classification">Original Title</td>
-                            <td class="info-table__classification-data">${original_title}</td>
+                            <td class="info-table__classification-data">${original_title || title || original_name}</td>
                         </tr>
                         <tr>
                             <td class="info-table__classification">Genres</td>
-                            <td class="info-table__classification-data">${genre_ids}</td>
+                            <td class="info-table__classification-data">${(movieGenres).join(', ') || 'No information..'}</td>
                         </tr>
                     </tbody>
                 </table>
