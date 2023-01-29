@@ -1,0 +1,54 @@
+.scrollUpBtn {
+    position: fixed;
+    z-index: 100;
+    opacity: 0;
+    bottom: 150px;
+    right: 100px;
+    fill: #ae1717;
+    transform: translateY(100px);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    @include mobile {
+        right: 20px;
+        bottom: 175px;
+    }
+
+    @include tablet {
+        right: 60px;
+    }
+
+    @include desktop {
+        right: 60px;
+    }
+
+    &:hover,
+    &:focus {
+        fill: #151514;
+        transform: translateY(-20px);
+    }
+}
+
+.showBtn {
+    opacity: 0.8;
+    transform: translateY(0);
+}
+
+.button-up {
+    transition: color 2s ease-in-out;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 45px;
+    height: 45px;
+
+    @include tablet {
+        width: 60px;
+        height: 60px;
+    }
+
+    @include desktop {
+        width: 100px;
+        height: 100px;
+    }
+}
