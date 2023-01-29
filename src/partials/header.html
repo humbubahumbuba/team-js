@@ -29,13 +29,7 @@
     </div>
     <div class="input">
       <form class="input__wraper form" id="search-form">
-        <input
-          class="header__input"
-          name="searchQuery"
-          type="text"
-          placeholder="Movie search"
-          autocomplete="off"
-        />
+        <input class="header__input" name="searchQuery" type="text" placeholder="Movie search" autocomplete="off" />
         <button class="input__search-btn" type="submit">
           <svg class="input__search-icon" width="12px" height="12px">
             <use href="./images/icons.svg#icon-search"></use>
@@ -44,7 +38,8 @@
       </form>
     </div>
 
-    <p class="input__error" id="js-input-error"></p>
+    <p class="input__error visually-hidden " id="js-input-error">Search result not successful. Enter the correct movie
+      name and repeat</p>
     <!-- <label class="form-switch">
       <input type="checkbox" id="theme-switch-toggle" />
       <i></i>

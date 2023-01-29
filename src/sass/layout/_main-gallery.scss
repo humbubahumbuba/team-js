@@ -2,6 +2,10 @@
     visibility: hidden;
 }
 
+.is-active {
+    visibility: visible;
+}
+
 .movieList {
     display: grid;
     justify-content: center;
