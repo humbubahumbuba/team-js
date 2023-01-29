@@ -56,20 +56,20 @@ export async function loadPageContent(lsKey, page=1) {
 
     if (lsKey === HOME_CONTENT) {
         const response = await getTrendMovies();
-        setStorageData(lsKey, response.results);
+        setStorageData(lsKey, response);
     }
 
     if (lsKey === CRT_CONTENT) {
         // if current page is home page
         if (page === HOME_CONTENT) {
             const response = await getTrendMovies();
-            setStorageData(lsKey, response.results);
+            setStorageData(lsKey, response);
             return;
         }
 
         // add API query response handling
         const response = await getQueryMovies(query, page);
-        setStorageData(lsKey, response.results);        
+        setStorageData(lsKey, response);        
     }
 
 }
@@ -79,24 +79,32 @@ export async function loadPageContent(lsKey, page=1) {
 
 
 
-// *** EXPORT FUNCTIONS FOR LOCALSTORAGE KEYS *** //
+// *** EXPORT FUNCTION FOR LOCALSTORAGE KEYS *** //
 
 // get trend movies for homepage render
-export async function fetchStorageData(key) {
-    let data = await getStorageData(key);
+export async function getPromisedData(key) {
+  try {
+        await new Promise(function (resolve) {
+            let data = getStorageData(key);
 
-    if (data) {
-        // console.log("Log inside export fn: ", data);
+            setTimeout(function () {
+                resolve();
+            }, 1000);
+        });
+        data = getStorageData(key);
         return data;
+    } catch (err) {
+        return console.log(err);
     }
 }
 
 
-// 
-// export async function getCurrentPageMovies() {
-
-// }
-
+// example of receiving data from outer function/module
+// functional test
+// getPromisedData(HOME_CONTENT).then(function(result) {
+//     // use the result here
+//     console.log(data);
+// });
 
 
 // *** //
