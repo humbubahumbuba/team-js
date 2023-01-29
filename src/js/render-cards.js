@@ -1,23 +1,36 @@
-import { getTrendMovies, getGenresMovies } from './api-fetch';
+// // leaving it here in case we'll do a fallback  function
+// import { getTrendMovies, getGenresMovies } from './api-fetch';
 
-// ;
+// import keys 
+import { lskeys } from "./ls-data";
+const { GENRES, HOME_CONTENT, CRT_CONTENT } = lskeys;
+// import async receive from localStorage
+import { getPromisedData } from './page-content-loader';
+
+
 let genreList = {};
 
 const mainGallery = document.querySelector('.mainGallery');
 const galleryList = document.querySelector('.movieList');
 
 (function () {
-  getTrendMovies()
-    .then(movies => createMarkupOfTrendingMovies(movies))
+  // receiving trends from localstorage here
+  getPromisedData(HOME_CONTENT)
+    .then(data => createMarkupOfTrendingMovies(data))
     .catch(err => console.log(err));
 })();
+
+console.log(getTrendMovies());
+console.log(getPromisedData(HOME_CONTENT));
+
 function getGenresNames() {
-  getGenresMovies()
+  getPromisedData(GENRES)
     .then(genres =>
       genres.forEach(genre => (genreList[genre['id']] = genre['name']))
     )
     .catch(err => console.log(err));
 }
+
 
 function createMarkupOfTrendingMovies(obj) {
   if (obj.results.length) {
