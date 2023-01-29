@@ -1,13 +1,10 @@
-import { lskeys, getStorageData } from "./ls-data";
-import { getTrendMovies } from "./api-fetch";
-import { genres } from '../data/genres.json';
+import axios from 'axios';
 
 const backdgop = document.querySelector('.js-backdrop');
 const modalMovie = document.querySelector('.js-modal-movie');
 const movieBox = document.querySelector('.js-movie-box');
 const closeModalBtn = document.querySelector('.js-close-btn');
 const movieList = document.querySelector('.movieList');
-const pageMovies = getStorageData(lskeys.CRT_CONTENT);
 
 closeModalBtn.addEventListener('click', onCloseModalBtnClick);
 movieList.addEventListener('click', onMovieClick);
@@ -57,7 +54,7 @@ function makeMovieMarkup(data) {
     const {
         original_name,
         name,
-        genre_ids,
+        genres,
         original_title,
         overview,
         popularity,
@@ -66,11 +63,7 @@ function makeMovieMarkup(data) {
         vote_average,
         vote_count } = data;
     const movieGenres = [];
-    genres.forEach(genre => {
-        if (genre_ids.includes(genre.id)) {
-            movieGenres.push(genre.name);
-        }
-    });
+    genres.forEach(genre => movieGenres.push(genre.name));
     const imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
     const markup = `
         <img class="modal-movie__poster" src="${imageBaseUrl}/${poster_path}" alt="${title || name || original_name}" loading="lazy" >
@@ -112,22 +105,21 @@ function makeMovieMarkup(data) {
 
 function renderMovieById(id) {
     try {
-        if (pageMovies.results) {
-            pageMovies.results.map(movie => {
-                if (movie.id === Number(id)) {
-                    makeMovieMarkup(movie);
-                }
-            });
-        } else {
-            getTrendMovies().then(response => {
-                response.results.map(movie => {
-                    if (movie.id === Number(id)) {
-                        makeMovieMarkup(movie);
-                    }
-                });
-            });
-        }
+        getMoviesByID(id).then(data => makeMovieMarkup(data));
     } catch (error) {
         console.error(error.message);
     };
+};
+
+async function getMoviesByID(movieID) {
+    const API_KEY = 'e8d94f3e976148bda0a5c640d4df112b';
+    try {
+        const url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${API_KEY}&language=en-US`;
+
+      const response = await axios.get(url);
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
 };
