@@ -1,4 +1,4 @@
-// *** PAGE CONTENT LOAD, SAVE & RENDER *** //
+// *** PAGE CONTENT LOAD *** //
 
 // import movie content fetch fn
 import { getTrendMovies, getGenresMovies } from "./api-fetch";
@@ -27,15 +27,24 @@ if (!trendy) {
 
 // load current once
 let currentPageData = getStorageData(CRT_CONTENT);
-let currentPageURL = window.location.href;
-// home page urls and analogs
-// change 3rd option when fixed empty string search
-const homePageURL = ['http://localhost:1234/', 
-                     'http://localhost:1234/index.html',
-                     'http://localhost:1234/index.html?searchQuery='];
+
+export function isOnHomePage() {
+    const currentPageURL = window.location.href;
+    // home page urls and analogs
+    // change 3rd option when fixed empty string search
+    const HOME_URLS = [
+        'http://localhost:1234/', 
+        'http://localhost:1234/index.html',
+        'http://localhost:1234/index.html?searchQuery='
+    ];
+
+    return HOME_URLS.includes(currentPageURL);
+}
+
+
 
 if (!currentPageData) {
-    if (homePageURL.includes(currentPageURL)) {
+    if (isOnHomePage()) {
         loadPageContent(CRT_CONTENT, HOME_CONTENT);
     }
 }
@@ -45,9 +54,9 @@ if (!currentPageData) {
 
 
 
-// *** API data loader *** //
+// *** IMPORT DATA FROM API TO LS *** //
 
-export async function loadPageContent(lsKey, page=1) {
+async function loadPageContent(lsKey, page=1) {
 
     if (lsKey === GENRES) {
         const response = await getGenresMovies();
@@ -71,21 +80,19 @@ export async function loadPageContent(lsKey, page=1) {
         const response = await getQueryMovies(query, page);
         setStorageData(lsKey, response);        
     }
-
 }
 
-// *** end of loader *** //
+// *** end import *** //
 
 
+// *** EXPORT DATA FROM LOCALSTORAGE BY KEY *** //
 
-
-// *** EXPORT FUNCTION FOR LOCALSTORAGE KEYS *** //
-
-// get trend movies for homepage render
+// get promise data from ls
 export async function getPromisedData(key) {
-  try {
+    let data = getStorageData(key);
+    try {
         await new Promise(function (resolve) {
-            let data = getStorageData(key);
+            data = getStorageData(key);
 
             setTimeout(function () {
                 resolve();
@@ -93,19 +100,121 @@ export async function getPromisedData(key) {
         });
         data = getStorageData(key);
         return data;
-    } catch (err) {
-        return console.log(err);
+    } 
+    catch (err) {
+        return console.error(err);
+    }
+}
+
+// *** end export *** //
+
+
+// *** ADD/REMOVE DATA FROM QUEUE/WATCHED *** //
+
+// write data to ls (query/watched)
+export async function addMovieToQueue(movie) {
+    let data = getStorageData(TMP_QUEUE);
+
+    try {
+        await new Promise(function (resolve) {
+            data = getStorageData(TMP_QUEUE);
+
+            setTimeout(function () {
+                resolve();
+            }, 100);
+        });
+
+        // check if any user currently logged in
+        if (!isLoggedIn()) {
+            data.push(movie);
+            setStorageData(TMP_QUEUE, data);
+        }
+        // add else when auth ready
+    }
+    catch (err) {
+        console.error(err);
     }
 }
 
 
-// example of receiving data from outer function/module
-// functional test
-// getPromisedData(HOME_CONTENT).then(function(result) {
-//     // use the result here
-//     console.log(data);
-// });
+export async function addMovieToWatched(movie) {
+    let data = getStorageData(TMP_WATCHED);
 
+    try {
+        await new Promise(function (resolve) {
+            data = getStorageData(TMP_WATCHED);
+
+            setTimeout(function () {
+                resolve();
+            }, 100);
+        });
+
+        // check if any user currently logged in
+        if (!isLoggedIn()) {
+            data.push(movie);
+            setStorageData(TMP_WATCHED, data);
+        }
+        // add else when auth ready
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+
+
+export async function removeMovieFromQueue(movieId) {
+    let data = getStorageData(TMP_QUEUE);
+
+    try {
+        await new Promise(function (resolve) {
+            data = getStorageData(TMP_WATCHED);
+
+            setTimeout(function () {
+                resolve();
+            }, 100);
+        });
+
+        if (!isLoggedIn()) {
+            // find movie index by id
+            const objWithIdIndex = data.findIndex((movie) => movie.id === movieId);
+
+            // if found - remove from list
+            if (objWithIdIndex > -1) {
+                data.splice(objWithIdIndex, 1);
+            }
+
+            setStorageData(TMP_QUEUE, data);
+        }
+        // add else when auth ready
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+
+
+export async function removeMovieFromWatched(movieId) {
+    try {
+        // if any error here - await for currentUser logged in
+        // then check if currentUser
+        // should work for now
+        if (!isLoggedIn()) {
+            const data = getStorageData(TMP_WATCHED);
+
+            const objWithIdIndex = data.findIndex((movie) => movie.id === movieId);
+
+            if (objWithIdIndex > -1) {
+                data.splice(objWithIdIndex, 1);
+            }
+
+            setStorageData(TMP_WATCHED, data);
+        }
+        // add else when auth ready
+    }
+    catch (err) {
+        console.error(err);
+    } 
+}
 
 // *** //
 
@@ -115,21 +224,16 @@ export async function getPromisedData(key) {
 // *** User data *** //
 
 // check if any user
-const currentUser = getStorageData(CRT_USER);
+function isLoggedIn() { 
+    let currentUser = getStorageData(CRT_USER);
+    
+    return currentUser;
+}
 
 // if no user logged in - use temporary queue and watched
-if (!currentUser) {
+if (!isLoggedIn()) {
     setStorageData(TMP_QUEUE, []);
     setStorageData(TMP_WATCHED, []);
 }
-
-
-// functions for adding to queue/watched
-
-
-
-// function for importing temporary queue/watched to logged in user
-
-
 
 // *** //

@@ -1,5 +1,7 @@
 // *** AUTH MODULE (div into lesser functional chunks) *** //
 
+import { isOnHomePage } from "./page-content-loader";
+
 import { getStorageData, setStorageData, lskeys } from "./ls-data";
 const { STORAGE_USERS, CRT_USER } = lskeys;
 
@@ -18,11 +20,9 @@ const refs = {
 
 // *** Auth modal windows *** //
 
-
 // !!! remove fn wrapper when lib page contains auth modal windows !!!
 // check if page is home page 
-const HOME_URL = 'http://localhost:1234/index.html';
-if (window.location.href === HOME_URL) {
+if (isOnHomePage()) {
 	document.addEventListener('DOMContentLoaded', handleAuth);
 }
 
@@ -59,8 +59,10 @@ function handleAuth() {
 	function closeModal(e) {
 		const parentModal = this.closest('.modal');
 
-		parentModal.classList.remove('active');
-		refs.overlay.classList.remove('active');
+		if (parentModal) {
+			parentModal.classList.remove('active');
+			refs.overlay.classList.remove('active');
+		}
 	}
 
 	// close on hitting Escape button
@@ -71,12 +73,11 @@ function handleAuth() {
 		}
 	});
 
-	/* // close on backdrop click
 	refs.overlay.addEventListener('click', function () {
 		document.querySelector('.modal.active').classList.remove('active');
 		this.classList.remove('active');
 	});
-	*/
+
 
 
 	// listeners moved from auth scripts 
@@ -180,10 +181,21 @@ function loginUser(credentials) {
 	if (isExistingUser(userLogin))  {
 		// find existing user and check if passwords match
 		const user = users.find(user => user.login === userLogin);
-		
+
+		// check if passwords match
 		if (user.password === userPassword) {
+			console.log(user);
+
+			// check if already logged in
+			if (user.userid === getStorageData(CRT_USER)) {
+				alert("Already logged in!");
+				return;
+			}
+
 			setStorageData(CRT_USER, user.userid);
 			alert("Welcome!");
+			// close login window after successful login
+			document.querySelector('.modal.active').firstElementChild.click();
 			return;
 		} 
 		
