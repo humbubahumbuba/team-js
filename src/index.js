@@ -5,3 +5,4 @@ import './js/modalMovie.js';
 import './js/ls-data';
 import './js/page-content-loader';
 import './js/auth';
+import './js/scroll-up-arrow';
