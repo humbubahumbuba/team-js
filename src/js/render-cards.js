@@ -1,5 +1,5 @@
 // // leaving it here in case we'll do a fallback  function
-// import { getTrendMovies, getGenresMovies } from './api-fetch';
+import { getTrendMovies, getGenresMovies } from './api-fetch';
 
 // import keys 
 import { lskeys } from "./ls-data";
@@ -12,6 +12,7 @@ let genreList = {};
 
 const mainGallery = document.querySelector('.mainGallery');
 const galleryList = document.querySelector('.movieList');
+export const textError = document.querySelector('.input__error');
 
 (function () {
   // receiving trends from localstorage here
@@ -19,9 +20,6 @@ const galleryList = document.querySelector('.movieList');
     .then(data => createMarkupOfTrendingMovies(data))
     .catch(err => console.log(err));
 })();
-
-console.log(getTrendMovies());
-console.log(getPromisedData(HOME_CONTENT));
 
 function getGenresNames() {
   getPromisedData(GENRES)
@@ -32,8 +30,9 @@ function getGenresNames() {
 }
 
 
-function createMarkupOfTrendingMovies(obj) {
+export function createMarkupOfTrendingMovies(obj) {
   if (obj.results.length) {
+    textError.classList.remove('is-active');
     const markup = obj.results
       .map(
         ({
@@ -55,7 +54,7 @@ function createMarkupOfTrendingMovies(obj) {
       </div>
       <div class="movieCard__text">
         <h2 class="movieCard__title">${(title || name).toUpperCase()}</h2>
-        <p class="movieCard__info"> ${genre_ids}| ${new Date(
+        <p class="movieCard__info"> ${getGenresNames(genre_ids)}| ${new Date(
           release_date || first_air_date
         ).getFullYear()}
           <span class="movieCard__rate">${vote_average.toFixed(1)}</span></p>
@@ -65,5 +64,7 @@ function createMarkupOfTrendingMovies(obj) {
       )
       .join('');
     galleryList.insertAdjacentHTML('afterBegin', markup);
+  } else {
+    textError.classList.add('is-active')
   }
 }
