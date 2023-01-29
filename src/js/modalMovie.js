@@ -112,15 +112,13 @@ function makeMovieMarkup(data) {
 
 function renderMovieById(id) {
     try {
-        if (pageMovies) {
-            pageMovies.map(movie => {
+        if (pageMovies.results) {
+            pageMovies.results.map(movie => {
                 if (movie.id === Number(id)) {
                     makeMovieMarkup(movie);
                 }
             });
-        };
-
-        if (!pageMovies) {
+        } else {
             getTrendMovies().then(response => {
                 response.results.map(movie => {
                     if (movie.id === Number(id)) {
@@ -128,7 +126,7 @@ function renderMovieById(id) {
                     }
                 });
             });
-        };
+        }
     } catch (error) {
         console.error(error.message);
     };
