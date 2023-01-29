@@ -124,14 +124,10 @@ export async function addMovieToQueue(movie) {
             }, 100);
         });
 
-        // if any error here - await for currentUser logged in
-        // then check if currentUser
-        // should work for now
+        // check if any user currently logged in
         if (!isLoggedIn()) {
-            console.log("Not logged in!");
             data.push(movie);
             setStorageData(TMP_QUEUE, data);
-            return data;
         }
         // add else when auth ready
     }
@@ -142,12 +138,19 @@ export async function addMovieToQueue(movie) {
 
 
 export async function addMovieToWatched(movie) {
+    let data = getStorageData(TMP_WATCHED);
+
     try {
-        // if any error here - await for currentUser logged in
-        // then check if currentUser
-        // should work for now
+        await new Promise(function (resolve) {
+            data = getStorageData(TMP_WATCHED);
+
+            setTimeout(function () {
+                resolve();
+            }, 100);
+        });
+
+        // check if any user currently logged in
         if (!isLoggedIn()) {
-            const data = getStorageData(TMP_WATCHED);
             data.push(movie);
             setStorageData(TMP_WATCHED, data);
         }
@@ -160,13 +163,18 @@ export async function addMovieToWatched(movie) {
 
 
 export async function removeMovieFromQueue(movieId) {
+    let data = getStorageData(TMP_QUEUE);
+
     try {
-        // if any error here - await for currentUser logged in
-        // then check if currentUser
-        // should work for now
+        await new Promise(function (resolve) {
+            data = getStorageData(TMP_WATCHED);
+
+            setTimeout(function () {
+                resolve();
+            }, 100);
+        });
+
         if (!isLoggedIn()) {
-            const data = getStorageData(TMP_QUEUE);
-            
             // find movie index by id
             const objWithIdIndex = data.findIndex((movie) => movie.id === movieId);
 
@@ -208,15 +216,6 @@ export async function removeMovieFromWatched(movieId) {
     } 
 }
 
-
-// example of receiving data from outer function/module
-// functional test
-// getPromisedData(HOME_CONTENT).then(function(result) {
-//     // use the result here
-//     console.log(data);
-// });
-
-
 // *** //
 
 
@@ -225,44 +224,16 @@ export async function removeMovieFromWatched(movieId) {
 // *** User data *** //
 
 // check if any user
-async function isLoggedIn() { 
-    try {
-        await new Promise(function (resolve) {
-            let currentUser = getStorageData(CRT_USER);
-
-            setTimeout(function () {
-                resolve();
-            }, 1000);
-        });
-        currentUser = getStorageData(CRT_USER);
-        return currentUser;
-    } 
-    catch (err) {
-        return console.error(err);
-    }
+function isLoggedIn() { 
+    let currentUser = getStorageData(CRT_USER);
+    
+    return currentUser;
 }
-
-
-isLoggedIn().then(function(result) {
-    // use the result here
-    // shows userId if logged in
-    // console.log(result);
-});
-
 
 // if no user logged in - use temporary queue and watched
 if (!isLoggedIn()) {
     setStorageData(TMP_QUEUE, []);
     setStorageData(TMP_WATCHED, []);
 }
-
-
-// functions for adding to queue/watched
-
-
-
-// function for importing temporary queue/watched to logged in user
-
-
 
 // *** //
