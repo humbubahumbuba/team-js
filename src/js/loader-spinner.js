@@ -7,7 +7,7 @@ function onSpinnerDisabled() {
   return spinnerEl.classList.add('visually-hidden');
 }
 
-const logoRef = document.querySelector('.header__wrapper');
+const logoRef = document.querySelector('.header__logo');
 logoRef.addEventListener('click', e => {
   e.preventDefault();
   onSpinnerEnabled();
