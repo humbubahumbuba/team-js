@@ -1,3 +1,5 @@
+// LSDATA CHANGED
+
 export const lskeys = {
     // const keys for localStorage
     CRT_USER: 'current-user',
@@ -6,12 +8,13 @@ export const lskeys = {
     HOME_CONTENT: 'home-page-content',
     CRT_CONTENT: 'current-page-content',
     GENRES: 'movie-genres',
+    STORAGE_USERS: 'users-data',
 };
 
 
 // initialize localStorage keys
 (function initLoad() {
-    if(!localStorage.keys) {
+    if(localStorage.length === 0) {
         localStorage.clear();
 
         // create keys and assign values
