@@ -19,7 +19,7 @@ export async function getTrendMovies() {
 
 export async function getGenresMovies() {
     try {
-      onSpinnerEnabled();
+        onSpinnerEnabled();
         const response = await axios.get(`${BASE_URL}genre/movie/list?api_key=${API_KEY}&language=en-US`);
         onSpinnerDisabled();
         // console.log(response.data.genres)
