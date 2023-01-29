@@ -11,9 +11,9 @@ const logoRef = document.querySelector('.header__wrapper');
 logoRef.addEventListener('click', e => {
   e.preventDefault();
   onSpinnerEnabled();
-  // setTimeout(() => {
-  //   onSpinnerDisabled();
-  // }, 6000);
+  setTimeout(() => {
+    onSpinnerDisabled();
+  }, 2000);
 });
 
 export { onSpinnerEnabled, onSpinnerDisabled };

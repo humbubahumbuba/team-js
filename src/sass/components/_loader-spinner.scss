@@ -1,45 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Anton');
-$color-primary: #000000;
-$color-secondary: #ffffff;
-$font: Anton, sans-serif;
-
-
 .backdrop-loader-spinner {
-    position: fixed;
-    z-index: 999;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background-color: rgba($color: $trird-text-color, $alpha: 0.5);
-    
-    &__text {
-        margin: 5px auto;
-        color: $color-secondary;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-family: $font;
-        margin-top: 120px;
-    }
-    &__filmstrip {
-        position: absolute;
-        width: 56px;
-        height: 70px;
-        background: $color-primary;
-        z-index: -1;
-        &:before, &:after {
-            content: '';
-            position: absolute;
-            height: 120%;
-            border-left: 5px dashed $color-secondary;
-            animation: roll 20ms infinite;
-        }
-        &:before {left: 5px;}
-        &:after {right: 5px;}
-        
-    }
+  position: fixed;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: rgba($color: $trird-text-color, $alpha: 0.5);
+  flex-direction: column;
 }
 
 .loader-spinner {
@@ -63,7 +32,7 @@ $font: Anton, sans-serif;
     transform: rotateX(70deg);
     animation: 1s spin linear infinite;
 }
-  &:after {
+  &::after {
     color: #FF3D00;
     transform: rotateY(70deg);
     animation-delay: .4s;
