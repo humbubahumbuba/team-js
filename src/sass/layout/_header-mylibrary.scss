@@ -1,18 +1,36 @@
 .header-mylibrary {
-    position: relative;
-    height: 230px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: rgba(0, 0, 0, 0.56);
+  position: relative;
+  height: 230px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(0, 0, 0, 0.56);
+  background-image: linear-gradient(
+      rgba(47, 48, 58, 0.4),
+      rgba(47, 48, 58, 0.4)
+    ),
+    url(../images/header-lib-mob.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  @media (min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
     background-image: linear-gradient(
         rgba(47, 48, 58, 0.4),
         rgba(47, 48, 58, 0.4)
       ),
-      url(../images/header-lib-mob.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  
+      url(../images/header-lib-mob@2x.jpg);
+  }
+
+  @include tablet {
+    height: 219px;
+    background-image: linear-gradient(
+        rgba(47, 48, 58, 0.4),
+        rgba(47, 48, 58, 0.4)
+      ),
+      url(../images/header-lib-tab.jpg);
+
     @media (min-device-pixel-ratio: 2),
       (min-resolution: 192dpi),
       (min-resolution: 2dppx) {
@@ -20,110 +38,75 @@
           rgba(47, 48, 58, 0.4),
           rgba(47, 48, 58, 0.4)
         ),
-        url(../images/header-lib-mob@2x.jpg);
+        url(../images/header-lib-tab@2x.jpg);
     }
-  
-    @include tablet {
-      height: 219px;
+  }
+
+  @include desktop {
+    height: 216px;
+
+    background-image: linear-gradient(
+        rgba(47, 48, 58, 0.4),
+        rgba(47, 48, 58, 0.4)
+      ),
+      url(../images/header-lib-desktop.jpg);
+
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
       background-image: linear-gradient(
           rgba(47, 48, 58, 0.4),
           rgba(47, 48, 58, 0.4)
         ),
-        url(../images/header-lib-tab.jpg);
-  
-      @media (min-device-pixel-ratio: 2),
-        (min-resolution: 192dpi),
-        (min-resolution: 2dppx) {
-        background-image: linear-gradient(
-            rgba(47, 48, 58, 0.4),
-            rgba(47, 48, 58, 0.4)
-          ),
-          url(../images/header-lib-tab@2x.jpg);
-      }
-    }
-  
-    @include desktop {
-      height: 216px;
-  
-      background-image: linear-gradient(
-          rgba(47, 48, 58, 0.4),
-          rgba(47, 48, 58, 0.4)
-        ),
-        url(../images/header-lib-desktop.jpg);
-  
-      @media (min-device-pixel-ratio: 2),
-        (min-resolution: 192dpi),
-        (min-resolution: 2dppx) {
-        background-image: linear-gradient(
-            rgba(47, 48, 58, 0.4),
-            rgba(47, 48, 58, 0.4)
-          ),
-          url(../images/header-lib-desktop@2x.jpg);
-      }
+        url(../images/header-lib-desktop@2x.jpg);
     }
   }
-  
-  .header-mylibrary__wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 40px;
-  }
-  
-  .header-mylibrary__logo--text {
-    display: none;
-    &:hover,
-    &:focus {
-      color: $sixth-text-color;
-    }
+}
+
+.header-mylibrary__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.nav-mylibrary__list {
+  display: flex;
+}
+
+.nav-mylibrary__item:not(:last-child) {
+  margin-right: 39px;
+}
+
+.nav-mylibrary__link {
+  text-transform: uppercase;
+  @include font(12, 500, 1.16);
+  color: $secondary-text-color;
+  &:hover,
+  &:focus {
+    color: $trird-text-color;
     transition: $transition;
+  }
+}
 
-    @include tablet {
-      display: inline-block;
-      font-family: $main-font-family;
-      @include font(30, 500, 1.16);
-      color: $secondary-text-color;
-    }
+.nav-mylibrary__item.active {
+  position: relative;
+}
+.nav-mylibrary__item.active::after {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: $line-color;
+}
 
+.button-mylibrary__wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 66px;
+
+  @include tablet {
+    margin-top: 52px;
   }
-  
-  .nav-mylibrary__list {
-    display: flex;
-  }
-  
-  .nav-mylibrary__item:not(:last-child) {
-    margin-right: 39px;
-  }
-  
-  .nav-mylibrary__link {
-    text-transform: uppercase;
-    @include font(12, 500, 1.16);
-    color: $secondary-text-color;
-    &:hover,
-    &:focus {
-      color: $trird-text-color;
-      transition: $transition;
-    }
-  }
-  
-  .nav-mylibrary__item.active {
-    position: relative;
-  }
-  .nav-mylibrary__item.active::after {
-    position: absolute;
-    content: '';
-    display: block;
-    width: 100%;
-    height: 3px;
-    background-color: $line-color;
-  }
-  
-  .button-mylibrary__wrap {
-    display: flex;
-    justify-content: center;
-    margin-top: 66px;
-  
-    @include tablet {
-      margin-top: 52px;
-    }
-  }
+}

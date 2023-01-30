@@ -1,19 +1,49 @@
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover,
+  &:focus {
+    .logo__text,
+    .header-mylibrary__logo--text {
+      color: $sixth-text-color;
+    }
+    .header__logo,
+    .header-mylibrary__logo {
+      stroke: $sixth-text-color;
+    }
+  }
+}
+
+.logo__text,
+.header-mylibrary__logo--text {
+  display: none;
+
+  transition: $transition;
+
+  @include tablet {
+    display: inline-block;
+    font-family: $main-font-family;
+    @include font(30, 500, 1.16);
+    color: $secondary-text-color;
+  }
+}
+
 .header__logo,
 .header-mylibrary__logo {
-  display: inline-block;
   height: 24px;
   width: 24px;
   overflow: hidden;
   margin-right: 10px;
 
+  stroke: $secondary-text-color;
+  transition: $transition;
+  fill: transparent;
+
   @include tablet {
     top: 41px;
     left: 30px;
-  }
-
-  &:hover,
-  &:focus {
-    stroke: $sixth-text-color;
   }
 
   @media screen and (min-width: 852px) {
