@@ -1,7 +1,7 @@
 // localStorage keys + synchronous get/set 
 
+// const keys for localStorage
 export const lskeys = {
-    // const keys for localStorage
     CRT_USER: 'current-user',
     TMP_QUEUE: 'temp-queue',
     TMP_WATCHED: 'temp-watched',
@@ -12,9 +12,6 @@ export const lskeys = {
 };
 
 
-// import for init
-import { isLoggedIn } from './page-content-loader';
-
 // initialize localStorage keys
 (function initLoad() {
     if(localStorage.length === 0) {
@@ -22,15 +19,10 @@ import { isLoggedIn } from './page-content-loader';
 
         // create keys and assign values
         const keys = Object.values(lskeys);
-        keys.map(key => localStorage.setItem(key, null));
-    }
-    
-    // if no user logged in - use temporary queue and watched
-    if (!isLoggedIn()) {
-        setStorageData(TMP_QUEUE, []);
-        setStorageData(TMP_WATCHED, []);
+        keys.map(key => localStorage.setItem(key, 0));
     }
 })();
+
     
 
 // get data by key

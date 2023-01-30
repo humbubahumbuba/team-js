@@ -1,17 +1,24 @@
 // *** PAGE CONTENT LOAD *** //
 
-// import movie content fetch fn
-import { getTrendMovies, getGenresMovies, getQueryMovies } from "./api-fetch";
 // import localStorage getter, setter and keys
-import { getStorageData, setStorageData } from "./ls-data";
 import { lskeys } from "./ls-data";
 const { GENRES, HOME_CONTENT, CRT_CONTENT, CRT_USER, TMP_QUEUE, TMP_WATCHED, STORAGE_USERS } = lskeys;
+import { getStorageData, setStorageData,  } from "./ls-data";
+
+// import movie content fetch fn
+import { getTrendMovies, getGenresMovies, getQueryMovies } from "./api-fetch";
 
 
 // check for key updates for each page load //
 (function updateKeys() {
     // keys to handle
     const processedKeys = [ ...Object.values(lskeys) ];
+
+    // if no user logged in - use temporary queue and watched
+    if (!isLoggedIn()) {
+        setStorageData(TMP_QUEUE, []);
+        setStorageData(TMP_WATCHED, []);
+    }
 
     // for each invalid (empty) key
     // load value from api
@@ -76,21 +83,6 @@ async function loadPageContent(lsKey, page=1) {
 // end load //
 
 
-// process user data //
-// check if any user
-export function isLoggedIn() { 
-    let currentUser = getStorageData(CRT_USER);
-    return currentUser;
-}
-
-// if no user logged in - use temporary queue and watched
-if (!isLoggedIn()) {
-    setStorageData(TMP_QUEUE, []);
-    setStorageData(TMP_WATCHED, []);
-}
-// end processing //
-
-
 // export data from localStorage by key //
 // get promise data from ls
 export async function getPromisedData(key) {
@@ -115,6 +107,13 @@ export async function getPromisedData(key) {
 
 
 // IMPORT TEMP QUEUE/WATCHED IF LOGGED-IN
+// check if any user
+function isLoggedIn() { 
+    let currentUser = getStorageData(CRT_USER);
+    return currentUser;
+}
+
+// import fn
 (async function importTempLibrary() {
     let currentUserId = getStorageData(CRT_USER);
     let usersData = getStorageData(STORAGE_USERS);
@@ -284,3 +283,4 @@ function removeItemByIndex(arr, itemId, searchedId) {
         arr.splice(objWithIdIndex, 1);
     }
 }
+
