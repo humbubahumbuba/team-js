@@ -1,0 +1,124 @@
+.form-switch {
+    display: inline-block;
+    cursor: pointer;
+    color: $main-bgcolor;
+    -webkit-tap-highlight-color: transparent;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+}
+
+.form-switch i {
+    position: relative;
+    display: inline-block;
+    margin-right: 0.5rem;
+    width: 46px;
+    height: 26px;
+    background-color: #e6e6e6;
+    border-radius: 23px;
+    vertical-align: text-bottom;
+    transition: all 0.3s linear;
+}
+
+.form-switch i::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 42px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 11px;
+    transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+    transition: all 0.25s linear;
+}
+
+.form-switch i::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 11px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+    transform: translate3d(2px, 2px, 0);
+    transition: all 0.2s ease-in-out;
+}
+
+.form-switch:active i::after {
+    width: 28px;
+    transform: translate3d(2px, 2px, 0);
+}
+
+.form-switch:active input:checked+i::after {
+    transform: translate3d(16px, 2px, 0);
+}
+
+.form-switch input {
+    display: none;
+}
+
+.form-switch input:checked+i {
+    background-color: #ff001b;
+}
+
+.form-switch input:checked+i::before {
+    transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0);
+}
+
+.form-switch input:checked+i::after {
+    transform: translate3d(22px, 2px, 0);
+}
+
+.theme-switch__icon {
+    color: currentColor;
+    height: 15px;
+    width: 15px;
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
+// body.dark .modal__btn-close {
+//     border-radius: 50%;
+// }
+
+// body.dark .tui-page-btn {
+//     color: $secondary-text-color;
+// }
+
+// body.dark .tui-ico-next {
+//     color: #fff;
+// }
+
+body.dark {
+    background-color: $fourth-text-color;
+}
+
+body.dark .toggle {
+    background-color: $fourth-text-color;
+}
+
+// body.dark .modal-film {
+//     background-color: $fourth-text-color;
+// }
+
+body.dark .toggle i {
+    color: #ddd;
+}
+
+body.dark .footer {
+    background-color: #10181d;
+    color: $secondary-text-color;
+}
+
+body.dark p {
+    color: $secondary-text-color;
+}
+
+// body.dark .footer__link {
+//     color: $trird-text-color;
+// }
+
+// body.dark .movieCard__title {
+//     color: $secondary-text-color;
+// }
