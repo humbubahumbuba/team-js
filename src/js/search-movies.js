@@ -1,6 +1,5 @@
 import { getQueryMovies } from './api-fetch';
 import { createMarkupOfTrendingMovies, textError } from './render-cards';
-import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { galleryList } from './render-cards';
 
 

@@ -7,7 +7,7 @@ const { GENRES, HOME_CONTENT, CRT_CONTENT } = lskeys;
 // import async receive from localStorage
 import { getPromisedData } from './page-content-loader';
 import { genres } from '../data/genres.json';
-import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
+
 
 
 const mainGallery = document.querySelector('.mainGallery');
