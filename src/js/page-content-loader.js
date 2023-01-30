@@ -1,9 +1,9 @@
 // *** PAGE CONTENT LOAD *** //
 
 // import movie content fetch fn
-import { getTrendMovies, getGenresMovies } from "./api-fetch";
+import { getTrendMovies, getGenresMovies, getQueryMovies } from "./api-fetch";
 // import localStorage getter, setter and keys
-import { getStorageData, setStorageData, getQueryMovies } from "./ls-data";
+import { getStorageData, setStorageData } from "./ls-data";
 import { lskeys } from "./ls-data";
 const { GENRES, HOME_CONTENT, CRT_CONTENT, CRT_USER, TMP_QUEUE, TMP_WATCHED, STORAGE_USERS } = lskeys;
 
