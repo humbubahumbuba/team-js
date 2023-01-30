@@ -78,7 +78,7 @@ async function loadPageContent(lsKey, page=1) {
 
 // process user data //
 // check if any user
-function isLoggedIn() { 
+export function isLoggedIn() { 
     let currentUser = getStorageData(CRT_USER);
     return currentUser;
 }
