@@ -18,5 +18,6 @@ function onFormSubmit(evt) {
     else {
         getQueryMovies(typeName, qPage = 1).then(movies => createMarkupOfTrendingMovies(movies)).catch(err => console.log(err))
     }
+
 }
 

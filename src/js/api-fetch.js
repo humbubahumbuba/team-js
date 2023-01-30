@@ -3,15 +3,16 @@ import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = 'e8d94f3e976148bda0a5c640d4df112b';
+export let currentPage = 1;
 
 export async function getTrendMovies() {
     try {
         onSpinnerEnabled();
-        const response = await axios.get(`${BASE_URL}trending/all/day?api_key=${API_KEY}`);
+        const response = await axios.get(`${BASE_URL}trending/movie/day?api_key=${API_KEY}&page=${currentPage}&media_type=movie`);
         onSpinnerDisabled();
         return response.data;
 
-    } 
+    }
     catch (err) {
         console.log(err);
     }
@@ -25,15 +26,15 @@ export async function getGenresMovies() {
         // console.log(response.data.genres)
         return response.data.genres;
     }
-    catch (err) { 
+    catch (err) {
         console.log(err);
     }
 }
 
-export async function getQueryMovies(userQuery, qPage=1) {
+export async function getQueryMovies(userQuery, qPage = 1) {
     try {
         const response = await axios.get(`${BASE_URL}search/movie`, {
-            params: { 
+            params: {
                 api_key: API_KEY,
                 query: userQuery,
                 // accepts requested page as qPage, defaults to 1st page if none provided
@@ -44,7 +45,7 @@ export async function getQueryMovies(userQuery, qPage=1) {
 
         return response.data;
     }
-    catch (err) { 
+    catch (err) {
         console.log(err);
     }
 }
