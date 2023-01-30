@@ -70,23 +70,6 @@
     padding-top: 40px;
   }
   
-  .header-mylibrary__logo--text {
-    display: none;
-    &:hover,
-    &:focus {
-      color: $sixth-text-color;
-    }
-    transition: $transition;
-
-    @include tablet {
-      display: inline-block;
-      font-family: $main-font-family;
-      @include font(30, 500, 1.16);
-      color: $secondary-text-color;
-    }
-
-  }
-  
   .nav-mylibrary__list {
     display: flex;
   }

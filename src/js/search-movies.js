@@ -5,6 +5,7 @@ import { createMarkupOfTrendingMovies, textError } from './render-cards';
 
 const searchForm = document.querySelector('#search-form');
 const btnSubmit = document.querySelector('.input__search-btn');
+let qPage;
 // console.log(searchForm)
 searchForm.addEventListener('submit', onFormSubmit);
 
