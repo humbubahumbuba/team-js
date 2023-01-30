@@ -136,8 +136,8 @@ function createUser(credentials) {
 		username: userName,
 		login: userLogin,
 		password: userPassword,
-		queue: null,
-		watched: null,
+		queue: [],
+		watched: [],
 	}
 	
 	// check if any users

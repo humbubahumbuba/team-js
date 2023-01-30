@@ -12,13 +12,23 @@ export const lskeys = {
 };
 
 
+// import for init
+import { isLoggedIn } from './page-content-loader';
+
 // initialize localStorage keys
 (function initLoad() {
     if(localStorage.length === 0) {
         localStorage.clear();
 
         // create keys and assign values
-        Object.values(lskeys).map(key => localStorage.setItem(key, null));
+        const keys = Object.values(lskeys);
+        keys.map(key => localStorage.setItem(key, null));
+    }
+    
+    // if no user logged in - use temporary queue and watched
+    if (!isLoggedIn()) {
+        setStorageData(TMP_QUEUE, []);
+        setStorageData(TMP_WATCHED, []);
     }
 })();
     
