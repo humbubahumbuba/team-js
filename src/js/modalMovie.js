@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 
 const backdgop = document.querySelector('.js-backdrop');
 const modalMovie = document.querySelector('.js-modal-movie');
@@ -55,7 +56,6 @@ function makeMovieMarkup(data) {
         original_name,
         name,
         genres,
-        original_title,
         overview,
         popularity,
         poster_path,
@@ -85,10 +85,10 @@ function makeMovieMarkup(data) {
                         </tr>
                         <tr>
                             <td class="info-table__classification">Original Title</td>
-                            <td class="info-table__classification-data">${original_title || title || original_name}</td>
+                            <td class="info-table__classification-data">${title || original_name}</td>
                         </tr>
                         <tr>
-                            <td class="info-table__classification">Genres</td>
+                            <td class="info-table__classification info-table__classification--not-margin">Genres</td>
                             <td class="info-table__classification-data">${(movieGenres).join(', ') || 'No information..'}</td>
                         </tr>
                     </tbody>
@@ -116,7 +116,9 @@ async function getMoviesByID(movieID) {
     try {
         const url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${API_KEY}&language=en-US`;
 
-      const response = await axios.get(url);
+        onSpinnerEnabled();
+        const response = await axios.get(url);
+        onSpinnerDisabled();
 
       return response.data;
     } catch (error) {
