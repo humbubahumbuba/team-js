@@ -1,12 +1,11 @@
-import { lskeys, getStorageData } from "./ls-data";
-import { getTrendMovies } from "./api-fetch";
+import axios from 'axios';
+import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 
 const backdgop = document.querySelector('.js-backdrop');
 const modalMovie = document.querySelector('.js-modal-movie');
 const movieBox = document.querySelector('.js-movie-box');
 const closeModalBtn = document.querySelector('.js-close-btn');
 const movieList = document.querySelector('.movieList');
-const pageMovies = getStorageData(lskeys.CRT_CONTENT);
 
 closeModalBtn.addEventListener('click', onCloseModalBtnClick);
 movieList.addEventListener('click', onMovieClick);
@@ -53,26 +52,29 @@ function onCloseModalBtnClick() {
 };
 
 function makeMovieMarkup(data) {
-    const { 
-        genre_ids,
-        original_title,
+    const {
+        original_name,
+        name,
+        genres,
         overview,
         popularity,
         poster_path,
         title,
         vote_average,
         vote_count } = data;
-        const imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
+    const movieGenres = [];
+    genres.forEach(genre => movieGenres.push(genre.name));
+    const imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
     const markup = `
-        <img class="modal-movie__poster" src="${imageBaseUrl}/${poster_path}" alt="${title}" loading="lazy" >
+        <img class="modal-movie__poster" src="${imageBaseUrl}/${poster_path}" alt="${title || name || original_name}" loading="lazy" >
             <div class="movie-card">
-                <h2 class="movie-card__title">${title}</h2>
+                <h2 class="movie-card__title">${(title || name || original_name).toUpperCase()}</h2>
                 <table class="info-table">
                     <tbody>
                         <tr>
                             <td class="info-table__classification">Vote / Votes</td>
                             <td class="info-table__classification-data">
-                                <span class="rating rating--vote">${vote_average}</span>
+                                <span class="rating rating--vote">${vote_average.toFixed(1)}</span>
                                 <span class="rating--slash-color">/</span>
                                 <span class="rating rating--votes">${vote_count}</span>
                             </td>
@@ -83,11 +85,11 @@ function makeMovieMarkup(data) {
                         </tr>
                         <tr>
                             <td class="info-table__classification">Original Title</td>
-                            <td class="info-table__classification-data">${original_title}</td>
+                            <td class="info-table__classification-data">${title || original_name}</td>
                         </tr>
                         <tr>
-                            <td class="info-table__classification">Genres</td>
-                            <td class="info-table__classification-data">${genre_ids}</td>
+                            <td class="info-table__classification info-table__classification--not-margin">Genres</td>
+                            <td class="info-table__classification-data">${(movieGenres).join(', ') || 'No information..'}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -103,24 +105,23 @@ function makeMovieMarkup(data) {
 
 function renderMovieById(id) {
     try {
-        if (pageMovies) {
-            pageMovies.map(movie => {
-                if (movie.id === Number(id)) {
-                    makeMovieMarkup(movie);
-                }
-            });
-        };
-
-        if (!pageMovies) {
-            getTrendMovies().then(response => {
-                response.results.map(movie => {
-                    if (movie.id === Number(id)) {
-                        makeMovieMarkup(movie);
-                    }
-                });
-            });
-        };
+        getMoviesByID(id).then(data => makeMovieMarkup(data));
     } catch (error) {
         console.error(error.message);
     };
+};
+
+async function getMoviesByID(movieID) {
+    const API_KEY = 'e8d94f3e976148bda0a5c640d4df112b';
+    try {
+        const url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${API_KEY}&language=en-US`;
+
+        onSpinnerEnabled();
+        const response = await axios.get(url);
+        onSpinnerDisabled();
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
 };
