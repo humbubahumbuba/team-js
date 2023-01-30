@@ -83,16 +83,29 @@
 }
 
 .info-table {
-  width: 240px;
+  display: block;
+  margin: 0;
   margin-bottom: 20px;
 }
 
 .info-table__classification {
+  display: block;
+  margin-right: 41px;
+  margin-bottom: 8px;
+
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
 
   color: $trird-text-color;
+
+  @media screen and (min-width: $desktop) {
+    margin-right: 85px;
+  }
+}
+
+.info-table__classification--not-margin {
+  margin-bottom: 0;
 }
 
 .info-table__classification-data {
@@ -147,10 +160,12 @@
 
   @media screen and (min-width: $tablet) {
     width: 264px;
+    overflow-y: auto;
   }
 
   @media screen and (min-width: $desktop) {
     width: 391px;
+    max-height: 160px;
   }
 }
 
