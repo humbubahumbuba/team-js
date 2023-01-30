@@ -6,55 +6,25 @@ import { lskeys } from "./ls-data";
 const { GENRES, HOME_CONTENT, CRT_CONTENT } = lskeys;
 // import async receive from localStorage
 import { getPromisedData } from './page-content-loader';
+import { genres } from '../data/genres.json';
 
 
-let genreList = {};
 
 const mainGallery = document.querySelector('.mainGallery');
-const galleryList = document.querySelector('.movieList');
+export const galleryList = document.querySelector('.movieList');
 export const textError = document.querySelector('.input__error');
 
 (function () {
   // receiving trends from localstorage here
+
   getPromisedData(HOME_CONTENT)
     .then(data => createMarkupOfTrendingMovies(data))
     .catch(err => console.log(err));
+
 })();
 
-function getGenresNames() {
-  getPromisedData(GENRES)
-    .then(genres =>
-      genres.forEach(genre => (genreList[genre['id']] = genre['name']))
-    )
-    .catch(err => console.log(err));
-
-}
-
-// const makeGenre = (genre = [], allGenres = []) => {
-//   genreList = allGenres.reduce((acc, genreItem) => {
-//     if (genre.includes(genreItem.id)) {
-//       acc.push(genreItem.name);
-//     }
-//     return acc;
-//   }, []);
-
-//   return genreList.join(', ');
-// };
-
-
-function generateGenreList(ids) {
-  if (localStorage.key == GENRES) {
-    return genreList = getGenresNames(GENRES);
-  }
-  let genreNames = ids.map(id => genreList[id]);
-  console.log(genreNames)
-  if (genreNames.length > 2) {
-    return `${genreNames[0]}, ${genreNames[1]}, Other`;
-  }
-  return genreNames.join(', ');
-}
-
 export function createMarkupOfTrendingMovies(obj) {
+
   if (obj.results.length) {
     textError.classList.remove('is-active');
     const markup = obj.results
@@ -78,9 +48,7 @@ export function createMarkupOfTrendingMovies(obj) {
       </div>
       <div class="movieCard__text">
         <h2 class="movieCard__title">${(title || name).toUpperCase()}</h2>
-        <p class="movieCard__info"> ${generateGenreList(
-          genre_ids
-        )} | ${new Date(
+        <p class="movieCard__info"> ${genereteGenresList(genre_ids)} | ${new Date(
           release_date || first_air_date
         ).getFullYear()}
           <span class="movieCard__rate">${vote_average.toFixed(1)}</span></p>
@@ -93,4 +61,18 @@ export function createMarkupOfTrendingMovies(obj) {
   } else {
     textError.classList.add('is-active')
   }
+
+}
+
+function genereteGenresList(ids) {
+  const movieGenres = [];
+  genres.forEach(genre => {
+    if (ids.includes(genre.id)) {
+      movieGenres.push(genre.name);
+    }
+  })
+  if (movieGenres.length > 2) {
+    return `${movieGenres[0]}, ${movieGenres[1]}, Other`;
+  }
+  return movieGenres.join(', ')
 }

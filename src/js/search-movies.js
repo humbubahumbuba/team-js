@@ -1,5 +1,6 @@
 import { getQueryMovies } from './api-fetch';
 import { createMarkupOfTrendingMovies, textError } from './render-cards';
+import { galleryList } from './render-cards';
 
 
 
@@ -16,7 +17,11 @@ function onFormSubmit(evt) {
         textError.classList.add('is-active');
     }
     else {
-        getQueryMovies(typeName, qPage = 1).then(movies => createMarkupOfTrendingMovies(movies)).catch(err => console.log(err))
+
+        getQueryMovies(typeName, qPage = 1).then(movies => createMarkupOfTrendingMovies(movies)).catch(err => console.log(err));
+
+        galleryList.innerHTML = '';
+
     }
 
 }
