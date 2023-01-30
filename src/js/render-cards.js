@@ -27,8 +27,32 @@ function getGenresNames() {
       genres.forEach(genre => (genreList[genre['id']] = genre['name']))
     )
     .catch(err => console.log(err));
+
 }
 
+// const makeGenre = (genre = [], allGenres = []) => {
+//   genreList = allGenres.reduce((acc, genreItem) => {
+//     if (genre.includes(genreItem.id)) {
+//       acc.push(genreItem.name);
+//     }
+//     return acc;
+//   }, []);
+
+//   return genreList.join(', ');
+// };
+
+
+function generateGenreList(ids) {
+  if (localStorage.key == GENRES) {
+    return genreList = getGenresNames(GENRES);
+  }
+  let genreNames = ids.map(id => genreList[id]);
+  console.log(genreNames)
+  if (genreNames.length > 2) {
+    return `${genreNames[0]}, ${genreNames[1]}, Other`;
+  }
+  return genreNames.join(', ');
+}
 
 export function createMarkupOfTrendingMovies(obj) {
   if (obj.results.length) {
@@ -54,7 +78,9 @@ export function createMarkupOfTrendingMovies(obj) {
       </div>
       <div class="movieCard__text">
         <h2 class="movieCard__title">${(title || name).toUpperCase()}</h2>
-        <p class="movieCard__info"> ${getGenresNames(genre_ids)}| ${new Date(
+        <p class="movieCard__info"> ${generateGenreList(
+          genre_ids
+        )} | ${new Date(
           release_date || first_air_date
         ).getFullYear()}
           <span class="movieCard__rate">${vote_average.toFixed(1)}</span></p>
