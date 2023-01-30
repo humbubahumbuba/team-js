@@ -7,20 +7,24 @@ const { GENRES, HOME_CONTENT, CRT_CONTENT } = lskeys;
 // import async receive from localStorage
 import { getPromisedData } from './page-content-loader';
 import { genres } from '../data/genres.json';
+import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 
 
 const mainGallery = document.querySelector('.mainGallery');
-const galleryList = document.querySelector('.movieList');
+export const galleryList = document.querySelector('.movieList');
 export const textError = document.querySelector('.input__error');
 
 (function () {
   // receiving trends from localstorage here
+
   getPromisedData(HOME_CONTENT)
     .then(data => createMarkupOfTrendingMovies(data))
     .catch(err => console.log(err));
+
 })();
 
 export function createMarkupOfTrendingMovies(obj) {
+
   if (obj.results.length) {
     textError.classList.remove('is-active');
     const markup = obj.results
@@ -57,6 +61,7 @@ export function createMarkupOfTrendingMovies(obj) {
   } else {
     textError.classList.add('is-active')
   }
+
 }
 
 function genereteGenresList(ids) {
