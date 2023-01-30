@@ -1,4 +1,4 @@
-// LSDATA CHANGED
+// localStorage keys + synchronous get/set 
 
 export const lskeys = {
     // const keys for localStorage
