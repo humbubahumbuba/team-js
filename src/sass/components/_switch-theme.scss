@@ -78,7 +78,7 @@
     margin-left: 8px;
 }
 
-// body.dark .modal__btn-close {
+// body.dark .modal-movie__btn-close {
 //     border-radius: 50%;
 // }
 
@@ -98,9 +98,9 @@ body.dark .toggle {
     background-color: $fourth-text-color;
 }
 
-// body.dark .modal-film {
-//     background-color: $fourth-text-color;
-// }
+body.dark .modal-film {
+    background-color: $fourth-text-color;
+}
 
 body.dark .toggle i {
     color: #ddd;
@@ -119,6 +119,6 @@ body.dark p {
 //     color: $trird-text-color;
 // }
 
-// body.dark .movieCard__title {
-//     color: $secondary-text-color;
-// }
+body.dark .movieCard__title {
+    color: $secondary-text-color;
+}
