@@ -43,7 +43,6 @@ export function setStorageData(key, data) {
 }
 
 // remove data
-
 export function removeStorageData(key) {
   try {
     localStorage.removeItem(key);
