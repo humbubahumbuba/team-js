@@ -1,15 +1,4 @@
-body {
-	background-color: #ffffff;
-}
-
-:root {
-    font-family: sans-serif;
-
-    --cubic: cubic-bezier(0.4, 0, 0.2, 1);
-    --duration: 250ms;
-}
-
-/* STYLES MODAL REMOVE UNUSED */
+/* auth modal styles */
 
 .overlay {
   visibility: hidden;
@@ -22,7 +11,7 @@ body {
 
   background-color: rgba(14, 14, 14, 0.5);
   z-index: 100;
-  transition: visibility var(--duration) var(--cubic), opacity var(--duration) var(--cubic);
+  transition: $transition;
   overflow: auto;
 }
 
@@ -32,8 +21,7 @@ body {
   position: fixed;
   z-index: 101;
   overflow: auto;
-  max-height: 50%;
-
+  max-height: 75%;
 
   top: 50%;
   left: 50%;
@@ -41,7 +29,7 @@ body {
   transform: translate(-50%, -50%) scale(1);
   width: 75%;
   background-color: #ffffff; 
-  border: 2px solid #3a3a3a; 
+  border: 2px solid $trird-text-color; 
   border-radius: 10px;
 
   &__close-icon {
@@ -49,18 +37,10 @@ body {
     justify-content: center;
     align-items: center;
 
-    @media screen and (max-width: 767px) {
-      margin-left: auto;
-      margin-top: -30px;
-      transform: translateX(30px);
-    }
-
-    @media screen and (min-width: 768px) {
-      position: fixed;
-      top: 0;
-      right: 0;
-      transform: translate(-8px, 8px);
-    }
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translate(-8px, 8px);
 
     width: 30px;
     height: 30px;
@@ -72,22 +52,30 @@ body {
     cursor: pointer;
     background-color: transparent;
 
-    transition-property: fill;
-    transition-duration: 250ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition: $transition;
 
     &:hover,
-    &:focus {
-      fill: #000;
+    &:focus { 
+      fill: #ff6b01;
     }
+
+    & svg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
   }
 
   &__button--primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     margin-top: 30px;
-    padding: 10px 55px;
+    padding: 10px 10px;
 
     background: #2e2e2e;
-    text-align: center;
 
     font-weight: 700;
     font-size: 16px;
@@ -172,7 +160,7 @@ body {
 
   &__input {
     padding: 12px;
-    padding-left: 40px;
+    padding-left: 14px;
     height: 40px;
     outline: none;
 
@@ -180,9 +168,7 @@ body {
     box-sizing: border-box;
     border-radius: 4px;
 
-    transition-property: border-color;
-    transition-duration: 250ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition: $transition;
   }
 }
 
