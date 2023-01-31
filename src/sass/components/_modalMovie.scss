@@ -193,13 +193,18 @@
 }
 
 .control-btn--to-watched {
-  background-color: $active-btn-color;
-  color: $secondary-text-color;
+  border: 1px solid $first-border-color;
+  background-color: transparent;
 }
 
 .control-btn--to-queue {
   border: 1px solid $first-border-color;
   background-color: transparent;
+}
+
+.active-button {
+  background-color: $active-btn-color;
+  color: $secondary-text-color;
 }
 
 @media screen and (min-width: $tablet) {
