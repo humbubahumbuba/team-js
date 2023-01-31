@@ -4,7 +4,7 @@ import '/src/sass/components/_pagination.scss';
 
 const container = document.querySelector('.tui-pagination');
 const options = {
-  totalItems: 0,
+  totalItems: 1000,
   itemsPerPage: 20,
   visiblePages: 5,
   page: 1,
