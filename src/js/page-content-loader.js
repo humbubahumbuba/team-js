@@ -9,8 +9,8 @@ import { getStorageData, setStorageData,  } from "./ls-data";
 import { getTrendMovies, getGenresMovies, getQueryMovies } from "./api-fetch";
 
 
-// check for key updates for each page load //
-(function updateKeys() {
+// fn check for key updates
+function updateKeys() {
     // keys to handle
     const processedKeys = [ ...Object.values(lskeys) ];
 
@@ -18,6 +18,9 @@ import { getTrendMovies, getGenresMovies, getQueryMovies } from "./api-fetch";
     if (!isLoggedIn()) {
         setStorageData(TMP_QUEUE, []);
         setStorageData(TMP_WATCHED, []);
+    } else {
+        // else import any temp lib
+        importTempLibrary();
     }
 
     // for each invalid (empty) key
@@ -28,7 +31,10 @@ import { getTrendMovies, getGenresMovies, getQueryMovies } from "./api-fetch";
         }
     })
 
-})();
+};
+
+// run on page reload
+updateKeys();
 
 
 export function isOnHomePage() {
@@ -115,12 +121,11 @@ function isLoggedIn() {
     return currentUser;
 }
 
+
 // import fn
-(async function importTempLibrary() {
-    let currentUserId = getStorageData(CRT_USER);
-    let usersData = getStorageData(STORAGE_USERS);
-    let queue = getStorageData(TMP_QUEUE);
-    let watched = getStorageData(TMP_WATCHED);
+export async function importTempLibrary() {
+    let currentUserId = await getPromisedData(CRT_USER);
+    let usersData = await getPromisedData(STORAGE_USERS);
 
     try {
         await new Promise(function (resolve) {
@@ -130,45 +135,30 @@ function isLoggedIn() {
         });
 
         if (isLoggedIn()) {
-            if (queue) {
-                currentUserId = getStorageData(CRT_USER);
-                usersData = getStorageData(STORAGE_USERS);
-                queue = getStorageData(TMP_QUEUE);
-                watched = getStorageData(TMP_WATCHED);
+            const params = [ TMP_QUEUE, TMP_WATCHED ];
 
-                // find user index in data
-                const userIndex = usersData.findIndex((u) => u.userid === currentUserId);
+            params.forEach(key => {
+                if(getStorageData(key)) {
+                    const param = key.slice(5, key.length);
+                    const arr = getStorageData(key);
 
-                // overwrite users data
-                usersData[userIndex]["queue"].concat(queue);
+                    // find user index in data
+                    const userIndex = usersData.findIndex((u) => u.userid === currentUserId);
 
-                // and pass it as storage value
-                setStorageData(STORAGE_USERS, usersData);
-                setStorageData(TMP_QUEUE, []);
-            }
+                    // overwrite users data
+                    usersData[userIndex][param].concat(arr);
+                    setStorageData(key, []);
+                }
+            });
 
-            if (watched) {
-                currentUserId = getStorageData(CRT_USER);
-                usersData = getStorageData(STORAGE_USERS);
-                queue = getStorageData(TMP_QUEUE);
-                watched = getStorageData(TMP_WATCHED);
-
-                // find user index in data
-                const userIndex = usersData.findIndex((u) => u.userid === currentUserId);
-
-                // overwrite users data
-                usersData[userIndex]["watched"].concat(watched);
-
-                // and pass it as storage value
-                setStorageData(STORAGE_USERS, usersData);
-                setStorageData(TMP_WATCHED, []);
-            }
+            updateKeys();
         }
     }
     catch (err) {
         console.error(err);
     }
-})();
+};
+
 
 
 // ADD-REMOVE DATA FROM QUEUE-WATCHED //
