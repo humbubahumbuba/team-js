@@ -9,4 +9,4 @@ import './js/auth';
 import './js/search-movies';
 import './js/loader-spinner';
 import './js/scroll-up-arrow';
-
+import './js/trending-movies';
