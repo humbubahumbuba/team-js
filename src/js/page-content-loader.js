@@ -204,25 +204,34 @@ async function addMovie(movie, key) {
         // check if any user currently logged in
         if (!isLoggedIn()) {
             data = getStorageData(key);
-            currentUserId = getStorageData(CRT_USER);
-            usersData = getStorageData(STORAGE_USERS);
 
             // do this if no logged in user
-            data.push(movie);
+            if (isDuplicate(data, movie)) {
+                console.log("Item already in the list!");
+            } else {
+                data.push(movie);
+            }
+
             setStorageData(key, data);
         } else {
+            // do this if user logged in
             data = getStorageData(key);
             currentUserId = getStorageData(CRT_USER);
             usersData = getStorageData(STORAGE_USERS);
 
-            // do this if user logged in
-            const param = key.slice(5, key.length);
-
             // find user index in data
             const userIndex = usersData.findIndex((u) => u.userid === currentUserId);
 
-            // overwrite users data
-            usersData[userIndex][param].push(movie);
+            // get key param and list of objects
+            const param = key.slice(5, key.length);
+            const userList = usersData[userIndex][param];
+
+            // overwrite users data if not changed
+            if (isDuplicate(userList, movie)) {
+                console.log("Item already in the list!");
+            } else {
+                userList.push(movie);
+            }
 
             // and pass it as storage value
             setStorageData(STORAGE_USERS, usersData);
@@ -249,8 +258,6 @@ async function removeMovie(movieId, key) {
 
         if (!isLoggedIn()) {
             data = getStorageData(key);
-            currentUserId = getStorageData(CRT_USER);
-            usersData = getStorageData(STORAGE_USERS);
 
             removeItemByIndex(data, "id", movieId);
             setStorageData(key, data);
@@ -284,3 +291,7 @@ function removeItemByIndex(arr, itemId, searchedId) {
     }
 }
 
+
+function isDuplicate(arr, item) {
+    return arr.find(el => el.id === item.id);
+}
