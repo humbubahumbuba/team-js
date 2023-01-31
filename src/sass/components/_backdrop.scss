@@ -2,6 +2,7 @@
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 777;
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -12,6 +13,10 @@
   transition: transform $animation, opacity $animation, visibility $animation;
 
   overflow-y: scroll;
+
+  @media screen and (max-width: 340px) {
+    padding: 0;
+  }
 }
 
 .backdrop.is-hidden {

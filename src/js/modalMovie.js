@@ -16,7 +16,10 @@ export let selectedMovieId;
 
 function onMovieClick(event) {
   const movieCard = event.target;
-  const isMovieCard = movieCard.classList.contains('movieCard__img');
+  const isMovieCard =
+    movieCard.classList.contains('movieCard__img') ||
+    movieCard.classList.contains('movieCard__info') ||
+    movieCard.classList.contains('movieCard__title');
   if (isMovieCard) {
     selectedMovieId =
       movieCard.parentElement.parentElement.getAttribute('data');
@@ -127,9 +130,15 @@ function makeMovieMarkup(data) {
   movieBox.innerHTML = markup;
 }
 
-function renderMovieById(id) {
+async function renderMovieById(id) {
   try {
-    getMovieByID(id).then(data => makeMovieMarkup(data));
+    const data = await getMovieByID(id);
+    if (!data) {
+      hideModal();
+      onSpinnerDisabled();
+      return;
+    }
+    makeMovieMarkup(data);
   } catch (error) {
     console.error(error.message);
   }

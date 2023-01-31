@@ -1,6 +1,7 @@
 .modal-movie {
   position: relative;
   width: 280px;
+  z-index: 778;
 
   margin: 0 auto;
   padding: 40px 20px;
@@ -18,7 +19,7 @@
 
     width: 704px;
     height: 552px;
-    padding: 40px 36px;
+    padding: 40px 72px 40px 36px;
   }
 
   @media screen and (min-width: $desktop) {
@@ -49,7 +50,16 @@
   }
 }
 
+.movie-card {
+  position: relative;
+
+  @media screen and (min-width: $desktop) {
+    width: 391px;
+  }
+}
+
 .modal-movie__poster {
+  display: block;
   width: 240px;
   height: 357px;
   margin-bottom: 20px;
@@ -92,6 +102,7 @@
   display: block;
   margin-right: 41px;
   margin-bottom: 8px;
+  width: 75px;
 
   font-weight: 500;
   font-size: 12px;
@@ -159,19 +170,35 @@
   margin-bottom: 20px;
 
   @media screen and (min-width: $tablet) {
+    display: inline-block;
     width: 264px;
+    max-height: 200px;
+    margin-bottom: 0;
     overflow-y: auto;
   }
 
   @media screen and (min-width: $desktop) {
     width: 391px;
-    max-height: 160px;
+    height: 140px;
   }
 }
 
 .control-btns {
   display: flex;
+  justify-content: flex-end;
   column-gap: 20px;
+
+  @media screen and (min-width: $tablet) {
+    column-gap: 15px;
+    position: absolute;
+    right: 72px;
+    bottom: 40px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    right: 108px;
+    bottom: 111px;
+  }
 }
 
 .control-btn {
@@ -193,8 +220,8 @@
 }
 
 .control-btn--to-watched {
-  border: 1px solid $first-border-color;
-  background-color: transparent;
+  background-color: $active-btn-color;
+  color: $secondary-text-color;
 }
 
 .control-btn--to-queue {
@@ -203,6 +230,7 @@
 }
 
 .active-button {
+  border: 1px solid $active-btn-color;
   background-color: $active-btn-color;
   color: $secondary-text-color;
 }
