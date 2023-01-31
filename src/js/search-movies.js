@@ -1,6 +1,9 @@
 import { getQueryMovies } from './api-fetch';
 import { createMarkupOfTrendingMovies, textError } from './render-cards';
+import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { galleryList } from './render-cards';
+import { getStorageData } from './ls-data';
+import { lskeys } from './ls-data';
 
 
 
@@ -17,12 +20,18 @@ function onFormSubmit(evt) {
         textError.classList.add('is-active');
     }
     else {
-
-        getQueryMovies(typeName, qPage = 1).then(movies => createMarkupOfTrendingMovies(movies)).catch(err => console.log(err));
-
+        onSpinnerEnabled()
         galleryList.innerHTML = '';
+        getQueryMovies(typeName, qPage = 1).then(movies => {
+            onSpinnerDisabled();
+            if (!movies.total_results) {
+                let homeContent = getStorageData(lskeys.HOME_CONTENT);
+                createMarkupOfTrendingMovies(homeContent);
+            }
+            createMarkupOfTrendingMovies(movies);
+
+        }).catch(err => console.log(err));
 
     }
-
 }
 

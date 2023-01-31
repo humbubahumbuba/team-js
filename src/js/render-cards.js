@@ -59,7 +59,9 @@ export function createMarkupOfTrendingMovies(obj) {
       .join('');
     galleryList.insertAdjacentHTML('afterBegin', markup);
   } else {
-    textError.classList.add('is-active')
+
+    textError.classList.add('is-active');
+
   }
 
 }
