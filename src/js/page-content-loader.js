@@ -34,11 +34,13 @@ import { getTrendMovies, getGenresMovies, getQueryMovies } from "./api-fetch";
 export function isOnHomePage() {
     const currentPageURL = window.location.href;
     // home page urls and analogs
-    // change 3rd option when fixed empty string search
     const HOME_URLS = [
+        // if hosted locally
         'http://localhost:1234/', 
         'http://localhost:1234/index.html',
-        'http://localhost:1234/index.html?searchQuery='
+        // and if deployed
+        'https://humbubahumbuba.github.io/team-js/',
+        'https://humbubahumbuba.github.io/team-js/index.html'
     ];
 
     return HOME_URLS.includes(currentPageURL);
