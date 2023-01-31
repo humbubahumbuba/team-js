@@ -46,7 +46,6 @@ export function isOnHomePage() {
     return HOME_URLS.includes(currentPageURL);
 }
 
-
 // load data from API to localStorage //
 async function loadPageContent(lsKey, page=1) {
     let value;
@@ -58,7 +57,8 @@ async function loadPageContent(lsKey, page=1) {
     }
 
     if (lsKey === HOME_CONTENT) {
-        value = await getTrendMovies();
+        // home page content is default trends 1st page
+        value = await getTrendMovies(1);
         setStorageData(lsKey, value);
         return;
     }
@@ -67,7 +67,7 @@ async function loadPageContent(lsKey, page=1) {
         // load home page content
         // if current page is home page
         if (isOnHomePage()) {
-            value = await getTrendMovies();
+            value = await getPromisedData(HOME_CONTENT);
             setStorageData(lsKey, value);
             return;
         }
