@@ -22,7 +22,7 @@
         padding-top: 60px;
         padding-bottom: 60px;
         max-width: 760px;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 338px);
     }
 
     @media screen and (min-width:1200px) {
@@ -66,10 +66,12 @@
     font-weight: 500px;
     font-size: 12px;
     line-height: 1.3;
+    padding: 2px;
 
     @media screen and (min-width:1200px) {
         font-size: 20px;
         line-height: 1.2;
+        padding: 5px;
     }
 }
 
