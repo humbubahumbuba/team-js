@@ -37,12 +37,13 @@ function onFormSubmit(evt) {
             onSpinnerDisabled();
             if (!movies.total_results) {
                 textError.classList.add('is-active');
+                pagination.movePageTo(1);
                 let homeContent = getDataMoviesTrend();
                 createMarkupOfTrendingMovies(homeContent);
             }
-            pagination.reset(movies.total_results)
             textError.classList.remove('is-active')
             createMarkupOfTrendingMovies(movies);
+            pagination.reset(movies.total_results)
             onFooterNoFixed();
         }).catch(err => console.log(err));
     }
