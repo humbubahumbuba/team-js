@@ -1,35 +1,23 @@
-import axios from 'axios';
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { genres } from '../data/genres.json';
-import { onFooterFixed, onFooterNoFixed } from './render-cards';
+// import { onFooterFixed, onFooterNoFixed } from './render-cards';
+import { closeModalBtn, backdgop } from './modalMovie';
 
 const emptyLibraryContaineRef = document.querySelector('.library-empty');
 const libraryListRef = document.querySelector('.library_list');
 const watchedLibraryBtn = document.querySelector('.js-watched');
 const queueLibraryBtn = document.querySelector('.js-queue');
-const pageLibraryRef = document.querySelector('#js-library');
 
 export const watchedStorageData = localStorage.getItem('watchedList');
 export const queueStorageData = localStorage.getItem('queueList');
 
-// pageLibraryRef.addEventListener('click', onPageLibraryBtnClick);
-
-// function onPageLibraryBtnClick() {
-//   if (!watchedStorageData) {
-//     emptyLibraryContaineRef.style.display = 'block'; //gifka
-//     // watchedLibraryBtn.classList.add('active-button');
-//     // return;
-//   } else {
-//     watchedLibraryBtn.classList.add('active-button');
-//     emptyLibraryContaineRef.style.display = 'none';
-//   }
-// }
-
-// watchedLibraryBtn.classList.add('active-button');
 onWatchedLibraryBtnClick();
 
 watchedLibraryBtn.addEventListener('click', onWatchedLibraryBtnClick);
 queueLibraryBtn.addEventListener('click', onQueueLibraryBtnClick);
+closeModalBtn.addEventListener('click', updateLibraryMarkup);
+document.addEventListener('keydown', event => closeModalOnEscape(event));
+backdgop.addEventListener('click', event => closeModalOnbackDrop(event));
 
 function onWatchedLibraryBtnClick() {
   queueLibraryBtn.classList.remove('active-button');
@@ -39,7 +27,7 @@ function onWatchedLibraryBtnClick() {
 
   const parsedWatchedFilms = JSON.parse(localStorage.getItem('watchedList'));
 
-  if (!parsedWatchedFilms) {
+  if (!parsedWatchedFilms || parsedWatchedFilms.length === 0) {
     emptyLibraryContaineRef.style.display = 'block';
     return;
   } else {
@@ -60,7 +48,7 @@ function onQueueLibraryBtnClick() {
 
   const parsedQueueFilms = JSON.parse(localStorage.getItem('queueList'));
 
-  if (!parsedQueueFilms) {
+  if (!parsedQueueFilms || parsedQueueFilms.length === 0) {
     emptyLibraryContaineRef.style.display = 'block';
     return;
   } else {
@@ -98,8 +86,8 @@ function createMovieLibraryMarkup({
       <div class="movieCard__text">
         <h2 class="movieCard__title">${(title || name).toUpperCase()}</h2>
         <p class="movieCard__info"> ${genereteGenresList(
-    genresArr
-  )} | ${new Date(release_date || first_air_date).getFullYear()}
+          genresArr
+        )} | ${new Date(release_date || first_air_date).getFullYear()}
           <span class="movieCard__rate">${vote_average.toFixed(1)}</span></p>
       </div>
       </li> `;
@@ -134,4 +122,52 @@ async function fetchLibraryMovieByID(id) {
   const data = await response.json();
 
   return data;
+}
+
+function updateLibraryMarkup() {
+  if (!watchedStorageData || watchedStorageData.length === 0) {
+    emptyLibraryContaineRef.style.display = 'block';
+  }
+  //
+  else if (!queueStorageData || queueStorageData.length === 0) {
+    emptyLibraryContaineRef.style.display = 'block';
+  }
+  //
+  else if (watchedLibraryBtn.classList.contains('active-button')) {
+    emptyLibraryContaineRef.style.display = 'none';
+    libraryListRef.innerHTML = '';
+
+    const parsedWatchedFilms = JSON.parse(localStorage.getItem('watchedList'));
+    const arrLocalFilms = parsedWatchedFilms.map(id => {
+      return fetchLibraryMovieByID(id).then(data => {
+        createMovieLibraryMarkup(data);
+      });
+    });
+  }
+  //
+  else {
+    emptyLibraryContaineRef.style.display = 'none';
+    libraryListRef.innerHTML = '';
+
+    const parsedQueueFilms = JSON.parse(localStorage.getItem('queueList'));
+    const arrLocalFilms = parsedQueueFilms.map(id => {
+      return fetchLibraryMovieByID(id).then(data => {
+        createMovieLibraryMarkup(data);
+      });
+    });
+  }
+}
+
+function closeModalOnEscape(event) {
+  if (event.key !== 'Escape') {
+    return;
+  }
+
+  updateLibraryMarkup();
+}
+
+function closeModalOnbackDrop(event) {
+  if (event.target === event.currentTarget) {
+    updateLibraryMarkup();
+  }
 }

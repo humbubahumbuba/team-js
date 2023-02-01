@@ -1,5 +1,3 @@
-// import { lskeys } from './ls-data';
-// // const { TMP_QUEUE, TMP_WATCHED } = lskeys;
 import { getStorageData, setStorageData, removeStorageData } from './ls-data';
 import { selectedMovieId } from './modalMovie';
 
@@ -17,7 +15,6 @@ export function textModalBtn(MovieId) {
   const btnQueue = document.querySelector('.control-btn--to-queue');
   const btnWatch = document.querySelector('.control-btn--to-watched');
   if (inList(MovieId, 'watchedList')) {
-    // console.log('є такий елемент в watched');
     btnWatch.textContent = 'Added to watched';
     btnWatch.disabled = true;
     function changeText() {
@@ -27,15 +24,12 @@ export function textModalBtn(MovieId) {
     }
     setTimeout(changeText, 500);
   } else {
-    // console.log('нема такого елемента в watched');
     btnWatch.textContent = 'Add to watched';
     btnWatch.classList.remove('active-button');
-    // console.log('видаляєм клас active');
     btnWatch.disabled = false;
   }
 
   if (inList(MovieId, 'queueList')) {
-    // console.log('є такий елемент в queue');
     btnQueue.textContent = 'Added to queue';
     btnQueue.disabled = true;
     function changeText() {
@@ -45,7 +39,6 @@ export function textModalBtn(MovieId) {
     }
     setTimeout(changeText, 750);
   } else {
-    // console.log('нема такого елемента в queue');
     btnQueue.textContent = 'Add to queue';
     btnQueue.classList.remove('active-button');
     btnQueue.disabled = false;
@@ -123,7 +116,6 @@ export function addQueueList() {
 }
 
 function removeFromQueueList(MovieId) {
-  console.log('видаляєм з queue');
   let queueList = [];
   let localQueueListJson = getStorageData('queueList');
   if (localQueueListJson) {
@@ -139,7 +131,6 @@ function removeFromQueueList(MovieId) {
 }
 
 function removeFromWatchedList(MovieId) {
-  console.log('видаляєм з watched');
   let watchList = [];
   let localWatchListJson = getStorageData('watchedList');
   if (localWatchListJson) {
