@@ -2,11 +2,13 @@ import axios from 'axios';
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { textModalBtn, addWatchList, addQueueList } from './watchQueueBtn';
 
-const backdgop = document.querySelector('.js-backdrop');
+export const backdgop = document.querySelector('.js-backdrop');
 const modalMovie = document.querySelector('.js-modal-movie');
 const movieBox = document.querySelector('.js-movie-box');
-const closeModalBtn = document.querySelector('.js-close-btn');
-const movieList = document.querySelector('.js-movieList') || document.querySelector('.js-library_list');
+export const closeModalBtn = document.querySelector('.js-close-btn');
+const movieList =
+  document.querySelector('.js-movieList') ||
+  document.querySelector('.js-library_list');
 
 closeModalBtn.addEventListener('click', onCloseModalBtnClick);
 movieList.addEventListener('click', onMovieClick);

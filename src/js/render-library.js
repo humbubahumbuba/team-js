@@ -1,5 +1,6 @@
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { genres } from '../data/genres.json';
+import { closeModalBtn, backdgop } from './modalMovie';
 
 const emptyLibraryContaineRef = document.querySelector('.library-empty');
 const libraryListRef = document.querySelector('.library_list');
@@ -13,6 +14,9 @@ onWatchedLibraryBtnClick();
 
 watchedLibraryBtn.addEventListener('click', onWatchedLibraryBtnClick);
 queueLibraryBtn.addEventListener('click', onQueueLibraryBtnClick);
+closeModalBtn.addEventListener('click', updateLibraryMarkup);
+document.addEventListener('keydown', event => closeModalOnEscape(event));
+backdgop.addEventListener('click', event => closeModalOnbackDrop(event));
 
 function onWatchedLibraryBtnClick() {
   queueLibraryBtn.classList.remove('active-button');
@@ -34,7 +38,6 @@ function onWatchedLibraryBtnClick() {
     });
   }
 }
-
 function onQueueLibraryBtnClick() {
   watchedLibraryBtn.classList.remove('active-button');
   queueLibraryBtn.classList.add('active-button');
@@ -55,7 +58,6 @@ function onQueueLibraryBtnClick() {
     });
   }
 }
-
 function createMovieLibraryMarkup({
   id,
   title,
@@ -89,7 +91,6 @@ function createMovieLibraryMarkup({
 
   libraryListRef.insertAdjacentHTML('beforeend', markup);
 }
-
 function genereteGenresList(ids) {
   const movieGenres = [];
   genres.forEach(genre => {
@@ -103,7 +104,6 @@ function genereteGenresList(ids) {
 
   return movieGenres.join(', ');
 }
-
 async function fetchLibraryMovieByID(id) {
   const BASE_URL = 'https://api.themoviedb.org/3/';
   const API_KEY = 'e8d94f3e976148bda0a5c640d4df112b';
@@ -117,4 +117,51 @@ async function fetchLibraryMovieByID(id) {
   const data = await response.json();
 
   return data;
+}
+function updateLibraryMarkup() {
+  if (!watchedStorageData || watchedStorageData.length === 0) {
+    emptyLibraryContaineRef.style.display = 'block';
+  }
+  //
+  else if (!queueStorageData || queueStorageData.length === 0) {
+    emptyLibraryContaineRef.style.display = 'block';
+  }
+  //
+  else if (watchedLibraryBtn.classList.contains('active-button')) {
+    emptyLibraryContaineRef.style.display = 'none';
+    libraryListRef.innerHTML = '';
+
+    const parsedWatchedFilms = JSON.parse(localStorage.getItem('watchedList'));
+    const arrLocalFilms = parsedWatchedFilms.map(id => {
+      return fetchLibraryMovieByID(id).then(data => {
+        createMovieLibraryMarkup(data);
+      });
+    });
+  }
+  //
+  else {
+    emptyLibraryContaineRef.style.display = 'none';
+    libraryListRef.innerHTML = '';
+
+    const parsedQueueFilms = JSON.parse(localStorage.getItem('queueList'));
+    const arrLocalFilms = parsedQueueFilms.map(id => {
+      return fetchLibraryMovieByID(id).then(data => {
+        createMovieLibraryMarkup(data);
+      });
+    });
+  }
+}
+
+function closeModalOnEscape(event) {
+  if (event.key !== 'Escape') {
+    return;
+  }
+
+  updateLibraryMarkup();
+}
+
+function closeModalOnbackDrop(event) {
+  if (event.target === event.currentTarget) {
+    updateLibraryMarkup();
+  }
 }
