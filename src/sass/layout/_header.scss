@@ -153,6 +153,7 @@
   padding: 0 0 4px 1px;
   outline: none;
   width: 280px;
+  -webkit-appearance: none;
   @media screen and (min-width: $tablet) {
     width: 336px;
   }
@@ -203,9 +204,5 @@
   text-align: center;
 }
 
-// .nav__item-log-out {
-//   background-color: $secondary-text-color;
-//   padding: 8px 5px 6px;
-//   min-width: 56px;
-// }
+
 

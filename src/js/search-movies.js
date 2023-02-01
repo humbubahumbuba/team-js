@@ -27,6 +27,9 @@ function onFormSubmit(evt) {
 
     if (!typeName.length) {
         textError.classList.add('is-active');
+        setTimeout(() => {
+            textError.classList.remove('is-active');
+          }, 2000);
         pagination.reset(movies.total_results);
     }
     else {
