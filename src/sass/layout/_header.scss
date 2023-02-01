@@ -143,6 +143,10 @@
 }
 
 .header__input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
   height: 20px;
   font-weight: 400;
   font-size: 14px;
@@ -153,7 +157,6 @@
   padding: 0 0 4px 1px;
   outline: none;
   width: 280px;
-  -webkit-appearance: none;
   @media screen and (min-width: $tablet) {
     width: 336px;
   }
@@ -178,7 +181,7 @@
   width: 18px;
   height: 18px;
 
-  right: 0;
+  right: 5px;
   background: transparent;
   border: none;
   margin: 0;
