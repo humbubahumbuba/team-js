@@ -1,15 +1,9 @@
 import { getQueryMovies } from './api-fetch';
-import { createMarkupOfTrendingMovies, textError } from './render-cards';
+import { createMarkupOfTrendingMovies, textError, galleryList, getDataMoviesTrend, onFooterFixed, onFooterNoFixed } from './render-cards';
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
-import { galleryList } from './render-cards';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 import '/src/sass/components/_pagination.scss';
-import { getQueryMovies } from './api-fetch';
-import { textError } from './render-cards';
-import { getDataMoviesTrend } from './render-cards';
-import { onFooterFixed, onFooterNoFixed } from './render-cards';
-
 
 const searchForm = document.querySelector('#search-form');
 export const container = document.querySelector('.tui-pagination');
@@ -21,7 +15,6 @@ const options = {
     centerAlign: false,
     firstItemClassName: 'tui-first-child',
     lastItemClassName: 'tui-last-child',
-
 };
 
 const pagination = new Pagination(container, options);
@@ -46,7 +39,6 @@ function onFormSubmit(evt) {
                 textError.classList.add('is-active');
                 let homeContent = getDataMoviesTrend();
                 createMarkupOfTrendingMovies(homeContent);
-
             }
             pagination.reset(movies.total_results)
             textError.classList.remove('is-active')
@@ -68,5 +60,4 @@ pagination.on('afterMove', async function (eventData) {
     } catch (err) {
         console.log(err);
     }
-
 });
