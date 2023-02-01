@@ -1,6 +1,6 @@
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { genres } from '../data/genres.json';
-import { onFooterFixed, onFooterNoFixed } from './render-cards';
+// import { onFooterFixed, onFooterNoFixed } from './render-cards';
 import { closeModalBtn, backdgop } from './modalMovie';
 
 const emptyLibraryContaineRef = document.querySelector('.library-empty');
