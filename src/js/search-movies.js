@@ -33,7 +33,7 @@ function onFormSubmit(evt) {
         onFooterFixed();
         onSpinnerEnabled()
         galleryList.innerHTML = '';
-        getQueryMovies(typeName, qPage = 1).then(movies => {
+        getQueryMovies(typeName, 1).then(movies => {
             onSpinnerDisabled();
             if (!movies.total_results) {
                 textError.classList.add('is-active');
