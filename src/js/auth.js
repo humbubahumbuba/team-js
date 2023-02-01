@@ -5,6 +5,7 @@ import { isOnHomePage } from "./page-content-loader";
 import { getStorageData, setStorageData, lskeys } from "./ls-data";
 const { STORAGE_USERS, CRT_USER } = lskeys;
 
+
 const refs = {
 	signUpForm: document.querySelector('.form-signup'),
 	signUpBtn: document.querySelector('.button--signup'),
@@ -184,15 +185,15 @@ function loginUser(credentials) {
 
 		// check if passwords match
 		if (user.password === userPassword) {
-			console.log(user);
-
 			// check if already logged in
 			if (user.userid === getStorageData(CRT_USER)) {
 				alert("Already logged in!");
 				return;
 			}
 
+			// set current user
 			setStorageData(CRT_USER, user.userid);
+
 			alert("Welcome!");
 			// close login window after successful login
 			document.querySelector('.modal.active').firstElementChild.click();
