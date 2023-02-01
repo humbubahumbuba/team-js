@@ -1,5 +1,6 @@
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { genres } from '../data/genres.json';
+import { onFooterFixed, onFooterNoFixed } from './render-cards';
 import { closeModalBtn, backdgop } from './modalMovie';
 
 const emptyLibraryContaineRef = document.querySelector('.library-empty');
@@ -7,8 +8,8 @@ const libraryListRef = document.querySelector('.library_list');
 const watchedLibraryBtn = document.querySelector('.js-watched');
 const queueLibraryBtn = document.querySelector('.js-queue');
 
-const watchedStorageData = localStorage.getItem('watchedList');
-const queueStorageData = localStorage.getItem('queueList');
+export const watchedStorageData = localStorage.getItem('watchedList');
+export const queueStorageData = localStorage.getItem('queueList');
 
 onWatchedLibraryBtnClick();
 
