@@ -130,16 +130,26 @@
   }
 }
 
+.input {
+  margin-top: 50px;
+  // position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .form {
   position: relative;
 }
 
-.input {
-  margin-top: 50px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.input__wraper {
+  width: 280px;
+  @media screen and (min-width: $tablet) {
+    width: 336px;
+  }
+  @media screen and (min-width: $desktop) {
+    width: 394;
+  }
 }
 
 .header__input {
@@ -156,13 +166,7 @@
   border-bottom: 0.5px solid $secondary-text-color;
   padding: 0 0 4px 1px;
   outline: none;
-  width: 280px;
-  @media screen and (min-width: $tablet) {
-    width: 336px;
-  }
-  @media screen and (min-width: $desktop) {
-    width: 394;
-  }
+  width: 100%;
 }
 
 .header__input::placeholder {
@@ -181,7 +185,7 @@
   width: 18px;
   height: 18px;
 
-  right: 5px;
+  right: 0px;
   background: transparent;
   border: none;
   margin: 0;
