@@ -39,6 +39,7 @@ function onWatchedLibraryBtnClick() {
     });
   }
 }
+
 function onQueueLibraryBtnClick() {
   watchedLibraryBtn.classList.remove('active-button');
   queueLibraryBtn.classList.add('active-button');
@@ -59,6 +60,7 @@ function onQueueLibraryBtnClick() {
     });
   }
 }
+
 function createMovieLibraryMarkup({
   id,
   title,
@@ -92,6 +94,7 @@ function createMovieLibraryMarkup({
 
   libraryListRef.insertAdjacentHTML('beforeend', markup);
 }
+
 function genereteGenresList(ids) {
   const movieGenres = [];
   genres.forEach(genre => {
@@ -105,6 +108,7 @@ function genereteGenresList(ids) {
 
   return movieGenres.join(', ');
 }
+
 async function fetchLibraryMovieByID(id) {
   const BASE_URL = 'https://api.themoviedb.org/3/';
   const API_KEY = 'e8d94f3e976148bda0a5c640d4df112b';
@@ -119,6 +123,7 @@ async function fetchLibraryMovieByID(id) {
 
   return data;
 }
+
 function updateLibraryMarkup() {
   if (!watchedStorageData || watchedStorageData.length === 0) {
     emptyLibraryContaineRef.style.display = 'block';
