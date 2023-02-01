@@ -1,11 +1,9 @@
 import { getTrendMovies } from './api-fetch';
-import { createMarkupOfTrendingMovies } from './render-cards';
-import { galleryList } from './render-cards';
+import { createMarkupOfTrendingMovies, galleryList, onFooterFixed, onFooterNoFixed } from './render-cards';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 import '/src/sass/components/_pagination.scss';
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
-import { onFooterFixed, onFooterNoFixed } from './render-cards';
 
 const container = document.querySelector('.tui-pagination');
 const options = {
@@ -16,7 +14,6 @@ const options = {
     centerAlign: false,
     firstItemClassName: 'tui-first-child',
     lastItemClassName: 'tui-last-child',
-
 };
 
 const pagination = new Pagination(container, options);
