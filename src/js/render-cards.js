@@ -58,7 +58,10 @@ export function createMarkupOfTrendingMovies(obj) {
     galleryList.insertAdjacentHTML('afterBegin', markup);
     footer.classList.remove('footer-active');
   } else {
-    textError.classList.add('is-active')
+    textError.classList.add('is-active');
+    setTimeout(() => {
+      textError.classList.remove('is-active');
+    }, 2000);
   }
 }
 
