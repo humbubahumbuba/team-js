@@ -1,19 +1,12 @@
 import { getQueryMovies } from './api-fetch';
-import { createMarkupOfTrendingMovies, textError } from './render-cards';
+import { createMarkupOfTrendingMovies, textError, galleryList, getDataMoviesTrend, onFooterFixed, onFooterNoFixed } from './render-cards';
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
-import { galleryList } from './render-cards';
-import { getStorageData } from './ls-data';
-import { lskeys } from './ls-data';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 import '/src/sass/components/_pagination.scss';
-import { getQueryMovies } from './api-fetch';
-
-
 
 const searchForm = document.querySelector('#search-form');
-
-const container = document.querySelector('.tui-pagination');
+export const container = document.querySelector('.tui-pagination');
 const options = {
     totalItems: 10000,
     itemsPerPage: 20,
@@ -22,11 +15,9 @@ const options = {
     centerAlign: false,
     firstItemClassName: 'tui-first-child',
     lastItemClassName: 'tui-last-child',
-
 };
 
 const pagination = new Pagination(container, options);
-// console.log(searchForm)
 searchForm.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(evt) {
@@ -36,32 +27,41 @@ function onFormSubmit(evt) {
 
     if (!typeName.length) {
         textError.classList.add('is-active');
+        setTimeout(() => {
+            textError.classList.remove('is-active');
+          }, 2000);
+        pagination.reset(movies.total_results);
     }
     else {
+        onFooterFixed();
         onSpinnerEnabled()
         galleryList.innerHTML = '';
-        getQueryMovies(typeName, qPage = 1).then(movies => {
+        getQueryMovies(typeName, 1).then(movies => {
             onSpinnerDisabled();
             if (!movies.total_results) {
-                let homeContent = getStorageData(lskeys.HOME_CONTENT);
+                textError.classList.add('is-active');
+                pagination.movePageTo(1);
+                let homeContent = getDataMoviesTrend();
                 createMarkupOfTrendingMovies(homeContent);
             }
-            pagination.reset(movies.total_results)
+            textError.classList.remove('is-active')
             createMarkupOfTrendingMovies(movies);
-
+            pagination.reset(movies.total_results)
+            onFooterNoFixed();
         }).catch(err => console.log(err));
-
     }
 }
 pagination.on('afterMove', async function (eventData) {
     var currentPage = eventData.page;
-
     galleryList.innerHTML = '';
+    onFooterFixed();
+    onSpinnerEnabled();
     const data = await getQueryMovies(localStorage.getItem('Search'), currentPage);
     try {
+        onSpinnerDisabled();
         createMarkupOfTrendingMovies(data);
+        onFooterNoFixed();
     } catch (err) {
         console.log(err);
     }
-
 });
