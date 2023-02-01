@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header-mylibrary__wrapper">
       <a class="logo" href="./index.html">
-        <div class="header-mylibrary__logo">
+        <div class="header__logo">
           <svg class="header-mylibrary__logo--icon" width="24px" height="24px">
             <use href="./images/icons.svg#icon-logo"></use>
           </svg>
@@ -16,7 +16,7 @@
             <a class="nav-mylibrary__link" href="index.html"> home </a>
           </li>
           <li class="nav-mylibrary__item active">
-            <a class="nav-mylibrary__link" href="./library.html">
+            <a class="nav-mylibrary__link" id="js-library" href="./library.html">
               my library
             </a>
           </li>
@@ -24,10 +24,10 @@
       </nav>
     </div>
     <div class="button-mylibrary__wrap">
-      <button class="button" type="button" data-action="watched">
+      <button class="button js-watched" type="button" data-action="watched">
         Watched
       </button>
-      <button class="button" type="button" data-action="queue">queue</button>
+      <button class="button js-queue" type="button" data-action="queue">queue</button>
     </div>
   </div>
   <label class="form-switch">

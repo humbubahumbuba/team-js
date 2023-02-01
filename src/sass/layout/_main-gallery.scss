@@ -1,86 +1,87 @@
 .visually-hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .is-active {
-    visibility: visible;
+  visibility: visible;
 }
 
-.movieList {
-    display: grid;
-    justify-content: center;
-    grid-gap: 20px;
-    margin-left: auto;
-    margin-right: auto;
+.movieList,
+.library_list {
+  display: grid;
+  justify-content: center;
+  grid-gap: 20px;
+  margin-left: auto;
+  margin-right: auto;
 
-    padding-top: 20px;
-    padding-bottom: 40px;
-    max-width: 280px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  max-width: 280px;
 
-    @media screen and (min-width:768px) {
-        grid-gap: 32px;
-        padding-top: 60px;
-        padding-bottom: 60px;
-        max-width: 760px;
-        grid-template-columns: repeat(2, 338px);
-    }
+  @media screen and (min-width: 768px) {
+    grid-gap: 32px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    max-width: 760px;
+    grid-template-columns: repeat(2, 338px);
+  }
 
-    @media screen and (min-width:1200px) {
-        grid-gap: 32px 16px;
-        max-width: 1200px;
-        grid-template-columns: repeat(3, 1fr);
-    }
+  @media screen and (min-width: 1200px) {
+    grid-gap: 32px 16px;
+    max-width: 1200px;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .movieCard__img {
-    width: 280px;
-    height: 398px;
-    object-fit: cover;
-    border-radius: 5px;
+  width: 280px;
+  height: 398px;
+  object-fit: cover;
+  border-radius: 5px;
 
-    @media screen and (min-width:768px) {
-        width: 336px;
-        height: 455px;
-    }
+  @media screen and (min-width: 768px) {
+    width: 336px;
+    height: 455px;
+  }
 
-    @media screen and (min-width:1200px) {
-        width: 394px;
-        height: 574px;
-    }
+  @media screen and (min-width: 1200px) {
+    width: 394px;
+    height: 574px;
+  }
 }
 
 .movieCard__text {
-    margin-top: 10px;
+  margin-top: 10px;
 
-    @media screen and (min-width:768px) {
-        margin-top: 8px;
-    }
+  @media screen and (min-width: 768px) {
+    margin-top: 8px;
+  }
 
-    @media screen and (min-width:1200px) {
-        margin-top: 12px;
-    }
+  @media screen and (min-width: 1200px) {
+    margin-top: 12px;
+  }
 }
 
 .movieCard__title,
 .movieCard__info {
-    font-weight: 500px;
-    font-size: 12px;
-    line-height: 1.3;
-    padding: 2px;
+  font-weight: 500px;
+  font-size: 12px;
+  line-height: 1.3;
+  padding: 2px;
 
-    @media screen and (min-width:1200px) {
-        font-size: 20px;
-        line-height: 1.2;
-        padding: 5px;
-    }
+  @media screen and (min-width: 1200px) {
+    font-size: 20px;
+    line-height: 1.2;
+    padding: 5px;
+  }
 }
 
 .movieCard__info {
-    color: #FF6B08;
+  color: #ff6b08;
 }
 
 .movieCard__img-wrapper {
-    background-color: #10181D;
-    border-radius: 5px;
-    width: max-content;
+  background-color: #10181d;
+  border-radius: 5px;
+  width: max-content;
 }
