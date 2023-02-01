@@ -52,6 +52,12 @@
 
   border: 1px solid #000;
   border-radius: 6px;
+
+  &:hover {
+    border: 1px solid $active-btn-color;
+    background-color: $active-btn-color;
+    color: $secondary-text-color;
+  }
 }
 
 .library-empty__text {

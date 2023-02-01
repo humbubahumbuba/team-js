@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { genres } from '../data/genres.json';
 
@@ -6,25 +5,10 @@ const emptyLibraryContaineRef = document.querySelector('.library-empty');
 const libraryListRef = document.querySelector('.library_list');
 const watchedLibraryBtn = document.querySelector('.js-watched');
 const queueLibraryBtn = document.querySelector('.js-queue');
-const pageLibraryRef = document.querySelector('#js-library');
 
 const watchedStorageData = localStorage.getItem('watchedList');
 const queueStorageData = localStorage.getItem('queueList');
 
-// pageLibraryRef.addEventListener('click', onPageLibraryBtnClick);
-
-// function onPageLibraryBtnClick() {
-//   if (!watchedStorageData) {
-//     emptyLibraryContaineRef.style.display = 'block'; //gifka
-//     // watchedLibraryBtn.classList.add('active-button');
-//     // return;
-//   } else {
-//     watchedLibraryBtn.classList.add('active-button');
-//     emptyLibraryContaineRef.style.display = 'none';
-//   }
-// }
-
-// watchedLibraryBtn.classList.add('active-button');
 onWatchedLibraryBtnClick();
 
 watchedLibraryBtn.addEventListener('click', onWatchedLibraryBtnClick);
@@ -38,7 +22,7 @@ function onWatchedLibraryBtnClick() {
 
   const parsedWatchedFilms = JSON.parse(localStorage.getItem('watchedList'));
 
-  if (!parsedWatchedFilms) {
+  if (!parsedWatchedFilms || parsedWatchedFilms.length === 0) {
     emptyLibraryContaineRef.style.display = 'block';
     return;
   } else {
@@ -59,7 +43,7 @@ function onQueueLibraryBtnClick() {
 
   const parsedQueueFilms = JSON.parse(localStorage.getItem('queueList'));
 
-  if (!parsedQueueFilms) {
+  if (!parsedQueueFilms || parsedQueueFilms.length === 0) {
     emptyLibraryContaineRef.style.display = 'block';
     return;
   } else {
