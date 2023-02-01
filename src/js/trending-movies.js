@@ -31,5 +31,4 @@ pagination.on('afterMove', async function (eventData) {
     } catch (err) {
         console.log(err)
     }
-
 });
