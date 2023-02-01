@@ -1,32 +1,30 @@
-// // leaving it here in case we'll do a fallback  function
 import { getTrendMovies, getGenresMovies } from './api-fetch';
-
-// import keys 
 import { lskeys } from "./ls-data";
-const { GENRES, HOME_CONTENT, CRT_CONTENT } = lskeys;
-// import async receive from localStorage
 import { getPromisedData } from './page-content-loader';
 import { genres } from '../data/genres.json';
+import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
+import { container } from './search-movies';
 
-
-
-const mainGallery = document.querySelector('.mainGallery');
 export const galleryList = document.querySelector('.movieList');
 export const textError = document.querySelector('.input__error');
+export const footer = document.querySelector('.footer');
 
-(function () {
-  // receiving trends from localstorage here
-
-  getPromisedData(HOME_CONTENT)
-    .then(data => createMarkupOfTrendingMovies(data))
+export function getDataMoviesTrend() {
+  footer.classList.add('footer-active');
+  container.classList.add('visually-hidden');
+  onSpinnerEnabled();
+  getPromisedData(lskeys.HOME_CONTENT)
+    .then(data => {
+      createMarkupOfTrendingMovies(data);
+      container.classList.remove('visually-hidden');
+      onSpinnerDisabled();
+    })
     .catch(err => console.log(err));
-
-})();
+};
+getDataMoviesTrend();
 
 export function createMarkupOfTrendingMovies(obj) {
-
   if (obj.results.length) {
-    textError.classList.remove('is-active');
     const markup = obj.results
       .map(
         ({
@@ -58,10 +56,10 @@ export function createMarkupOfTrendingMovies(obj) {
       )
       .join('');
     galleryList.insertAdjacentHTML('afterBegin', markup);
+    footer.classList.remove('footer-active');
   } else {
     textError.classList.add('is-active')
   }
-
 }
 
 function genereteGenresList(ids) {
@@ -75,4 +73,13 @@ function genereteGenresList(ids) {
     return `${movieGenres[0]}, ${movieGenres[1]}, Other`;
   }
   return movieGenres.join(', ')
+}
+
+export function onFooterFixed() {
+  footer.classList.add('footer-active');
+  container.classList.add('visually-hidden');
+}
+export function onFooterNoFixed() {
+  footer.classList.remove('footer-active');
+  container.classList.remove('visually-hidden');
 }

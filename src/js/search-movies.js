@@ -2,18 +2,17 @@ import { getQueryMovies } from './api-fetch';
 import { createMarkupOfTrendingMovies, textError } from './render-cards';
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { galleryList } from './render-cards';
-import { getStorageData } from './ls-data';
-import { lskeys } from './ls-data';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 import '/src/sass/components/_pagination.scss';
 import { getQueryMovies } from './api-fetch';
-
+import { textError } from './render-cards';
+import { getDataMoviesTrend } from './render-cards';
+import { onFooterFixed, onFooterNoFixed } from './render-cards';
 
 
 const searchForm = document.querySelector('#search-form');
-
-const container = document.querySelector('.tui-pagination');
+export const container = document.querySelector('.tui-pagination');
 const options = {
     totalItems: 10000,
     itemsPerPage: 20,
@@ -26,7 +25,6 @@ const options = {
 };
 
 const pagination = new Pagination(container, options);
-// console.log(searchForm)
 searchForm.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(evt) {
@@ -36,30 +34,37 @@ function onFormSubmit(evt) {
 
     if (!typeName.length) {
         textError.classList.add('is-active');
+        pagination.reset(movies.total_results);
     }
     else {
+        onFooterFixed();
         onSpinnerEnabled()
         galleryList.innerHTML = '';
         getQueryMovies(typeName, qPage = 1).then(movies => {
             onSpinnerDisabled();
             if (!movies.total_results) {
-                let homeContent = getStorageData(lskeys.HOME_CONTENT);
+                textError.classList.add('is-active');
+                let homeContent = getDataMoviesTrend();
                 createMarkupOfTrendingMovies(homeContent);
+
             }
             pagination.reset(movies.total_results)
+            textError.classList.remove('is-active')
             createMarkupOfTrendingMovies(movies);
-
+            onFooterNoFixed();
         }).catch(err => console.log(err));
-
     }
 }
 pagination.on('afterMove', async function (eventData) {
     var currentPage = eventData.page;
-
     galleryList.innerHTML = '';
+    onFooterFixed();
+    onSpinnerEnabled();
     const data = await getQueryMovies(localStorage.getItem('Search'), currentPage);
     try {
+        onSpinnerDisabled();
         createMarkupOfTrendingMovies(data);
+        onFooterNoFixed();
     } catch (err) {
         console.log(err);
     }

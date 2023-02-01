@@ -11,7 +11,6 @@ export async function getTrendMovies(currentPage) {
         const response = await axios.get(`${BASE_URL}trending/movie/day?api_key=${API_KEY}&page=${currentPage}&media_type=movie`);
         onSpinnerDisabled();
         return response.data;
-
     }
     catch (err) {
         console.log(err);
@@ -23,7 +22,6 @@ export async function getGenresMovies() {
         onSpinnerEnabled();
         const response = await axios.get(`${BASE_URL}genre/movie/list?api_key=${API_KEY}&language=en-US`);
         onSpinnerDisabled();
-        // console.log(response.data.genres)
         return response.data.genres;
     }
     catch (err) {
