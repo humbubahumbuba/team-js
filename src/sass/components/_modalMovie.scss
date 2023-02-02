@@ -63,6 +63,7 @@
   width: 240px;
   height: 357px;
   margin-bottom: 20px;
+  object-fit: cover;
 
   background-color: gray;
   border-radius: 5px;
@@ -214,6 +215,7 @@
   @media screen and (min-width: $tablet) {
     width: 125px;
   }
+
   @media screen and (min-width: $desktop) {
     width: 136px;
   }
@@ -234,12 +236,14 @@
   background-color: $active-btn-color;
   color: $secondary-text-color;
 }
+
 @media screen and (min-width: $tablet) {
   .movie-box {
     display: flex;
     column-gap: 68px;
   }
 }
+
 @media screen and (min-width: $desktop) {
   .movie-box {
     column-gap: 16px;
