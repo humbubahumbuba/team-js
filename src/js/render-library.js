@@ -28,12 +28,7 @@ function onWatchedLibraryBtnClick() {
     return;
   } else {
     emptyLibraryContaineRef.style.display = 'none';
-
-    const arrLocalFilms = parsedWatchedFilms.map(id => {
-      return fetchLibraryMovieByID(id).then(data => {
-        createMovieLibraryMarkup(data);
-      });
-    });
+    infinityScroll(parsedWatchedFilms);
   }
 }
 
@@ -50,11 +45,7 @@ function onQueueLibraryBtnClick() {
     return;
   } else {
     emptyLibraryContaineRef.style.display = 'none';
-    const arrLocalFilms = parsedQueueFilms.map(id => {
-      return fetchLibraryMovieByID(id).then(data => {
-        createMovieLibraryMarkup(data);
-      });
-    });
+    infinityScroll(parsedQueueFilms);
   }
 }
 
@@ -141,12 +132,7 @@ function updateLibraryMarkup() {
   ) {
     emptyLibraryContaineRef.style.display = 'none';
     libraryListRef.innerHTML = '';
-
-    const arrLocalFilms = parsedWatchedFilms.map(id => {
-      return fetchLibraryMovieByID(id).then(data => {
-        createMovieLibraryMarkup(data);
-      });
-    });
+    infinityScroll(parsedWatchedFilms)
   }
   //
   else if (
@@ -155,12 +141,7 @@ function updateLibraryMarkup() {
   ) {
     emptyLibraryContaineRef.style.display = 'none';
     libraryListRef.innerHTML = '';
-
-    const arrLocalFilms = parsedQueueFilms.map(id => {
-      return fetchLibraryMovieByID(id).then(data => {
-        createMovieLibraryMarkup(data);
-      });
-    });
+    infinityScroll(parsedQueueFilms);
   }
 }
 
@@ -176,4 +157,31 @@ function closeModalOnbackDrop(event) {
   if (event.target === event.currentTarget) {
     updateLibraryMarkup();
   }
+}
+
+function infinityScroll(parsedFilms) {
+  console.log(parsedFilms);
+  let dynamicStart = 0;
+  let dynamicEnd = 9;
+  let slicedMoviesArr = parsedFilms.slice(dynamicStart, dynamicEnd);
+  document.addEventListener('scroll', function() {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      for (let i = dynamicStart; dynamicStart < dynamicEnd; i++) {
+        dynamicStart += 9;
+        dynamicEnd += 9;
+        slicedMoviesArr = parsedFilms.slice(dynamicStart, dynamicEnd);
+        if (dynamicEnd >= parsedFilms.length) break;
+      }
+      slicedMoviesArr.map(id => {
+        return fetchLibraryMovieByID(id).then(data => {
+          createMovieLibraryMarkup(data);
+        });
+      });
+    }
+  });
+  slicedMoviesArr.map(id => {
+    return fetchLibraryMovieByID(id).then(data => {
+      createMovieLibraryMarkup(data);
+    });
+  });
 }
