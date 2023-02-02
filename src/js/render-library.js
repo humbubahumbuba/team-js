@@ -1,15 +1,11 @@
 import { onSpinnerDisabled, onSpinnerEnabled } from './loader-spinner';
 import { genres } from '../data/genres.json';
-// import { onFooterFixed, onFooterNoFixed } from './render-cards';
 import { closeModalBtn, backdgop } from './modalMovie';
 
 const emptyLibraryContaineRef = document.querySelector('.library-empty');
 const libraryListRef = document.querySelector('.library_list');
 const watchedLibraryBtn = document.querySelector('.js-watched');
 const queueLibraryBtn = document.querySelector('.js-queue');
-
-export const watchedStorageData = localStorage.getItem('watchedList');
-export const queueStorageData = localStorage.getItem('queueList');
 
 onWatchedLibraryBtnClick();
 
@@ -32,6 +28,7 @@ function onWatchedLibraryBtnClick() {
     return;
   } else {
     emptyLibraryContaineRef.style.display = 'none';
+
     const arrLocalFilms = parsedWatchedFilms.map(id => {
       return fetchLibraryMovieByID(id).then(data => {
         createMovieLibraryMarkup(data);
@@ -125,19 +122,26 @@ async function fetchLibraryMovieByID(id) {
 }
 
 function updateLibraryMarkup() {
-  if (!watchedStorageData || watchedStorageData.length === 0) {
+  const parsedWatchedFilms = JSON.parse(localStorage.getItem('watchedList'));
+  const parsedQueueFilms = JSON.parse(localStorage.getItem('queueList'));
+
+  if (!parsedWatchedFilms || parsedWatchedFilms.length === 0) {
+    libraryListRef.innerHTML = '';
     emptyLibraryContaineRef.style.display = 'block';
   }
   //
-  else if (!queueStorageData || queueStorageData.length === 0) {
+  else if (!parsedQueueFilms || parsedQueueFilms.length === 0) {
+    libraryListRef.innerHTML = '';
     emptyLibraryContaineRef.style.display = 'block';
   }
   //
-  else if (watchedLibraryBtn.classList.contains('active-button')) {
+  else if (
+    watchedLibraryBtn.classList.contains('active-button') &&
+    parsedWatchedFilms.length > 0
+  ) {
     emptyLibraryContaineRef.style.display = 'none';
     libraryListRef.innerHTML = '';
 
-    const parsedWatchedFilms = JSON.parse(localStorage.getItem('watchedList'));
     const arrLocalFilms = parsedWatchedFilms.map(id => {
       return fetchLibraryMovieByID(id).then(data => {
         createMovieLibraryMarkup(data);
@@ -145,11 +149,13 @@ function updateLibraryMarkup() {
     });
   }
   //
-  else {
+  else if (
+    queueLibraryBtn.classList.contains('active-button') &&
+    parsedQueueFilms.length > 0
+  ) {
     emptyLibraryContaineRef.style.display = 'none';
     libraryListRef.innerHTML = '';
 
-    const parsedQueueFilms = JSON.parse(localStorage.getItem('queueList'));
     const arrLocalFilms = parsedQueueFilms.map(id => {
       return fetchLibraryMovieByID(id).then(data => {
         createMovieLibraryMarkup(data);
